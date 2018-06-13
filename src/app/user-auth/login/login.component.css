@@ -1,3 +1,7 @@
+.login-content {
+  background-color: #eee;
+}
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -24,10 +28,6 @@ a {
   font-weight: bold;
 }
 
-.login-content {
-  background-color: #eee;
-}
-
 .col-md-6 {
   width: 50%;
 }
@@ -38,4 +38,26 @@ a {
 
 .login-header {
   text-align: center;
+}
+
+.error-message {
+  text-align: center;
+  margin: 0 auto;
+  width: 35%;
+  background-color: #f2dede;
+  color: #a94442;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ebccd1;
+}
+
+.success-message {
+  text-align: center;
+  margin: 0 auto;
+  width: 35%;
+  background-color: #dff0d8;
+  color: #3c763d;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #d6e9c6;
 }

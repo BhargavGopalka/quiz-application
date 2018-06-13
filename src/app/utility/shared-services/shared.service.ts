@@ -10,6 +10,7 @@ import {BehaviorSubject, Observable} from 'rxjs/index';
 export class SharedService {
 
   private isLoginRequired: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isRegistrationSuccessfully: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private _router: Router) {
   }
@@ -54,6 +55,15 @@ export class SharedService {
 
   setLoginRequired(value: boolean): void {
     this.isLoginRequired.next(value);
+  }
+
+  /* Successful registration */
+  getSuccessMessage(): Observable<boolean> {
+    return this.isRegistrationSuccessfully.asObservable();
+  }
+
+  setSuccessMessage(value: boolean): void {
+    this.isRegistrationSuccessfully.next(value);
   }
 
   /* Check login state */

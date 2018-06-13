@@ -1,0 +1,31 @@
+<div class="content">
+  <div class="container">
+    <div>
+      <div class="col-sm-8 col-sm-offset-2">
+        <span class="user-heading"> Hi, {{userData.firstName}}!</span>
+        <button class="logout-button" mat-raised-button color="warn" (click)="onLogout()">Logout</button>
+        <div>
+          <h3 class="quiz-heading">Quiz for Angular</h3>
+        </div>
+        <div *ngFor="let quiz of singleQuestion">
+          <div class="question-box">
+            <span class="question-text">{{quiz.question}}</span>
+          </div>
+          <div>
+            <mat-radio-group class="example-radio-group">
+              <mat-radio-button class="example-radio-button" *ngFor="let option of quiz.options"
+                                [value]="option">
+                {{option.option}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="continue-button">
+            <button mat-raised-button color="primary" (click)="getQuestions(quiz.questionId + 1)">
+              {{quizList.length === (quiz.questionId+1) ? 'Finish' : 'Continue'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.login-content {
+  background-color: #eee;
+}
+
+.error-message {
+  text-align: center;
+  margin: 0 auto;
+  width: 35%;
+  background-color: #f2dede;
+  color: #a94442;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ebccd1;
+}
+
+.col-md-6 {
+  width: 50%;
+}
+
+.col-md-offset-3 {
+  margin-left: 25%;
+}
+
+.header {
+  text-align: center;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.error {
+  color: red;
+}
+
+.submit-button {
+  margin-left: 25%;
+}
+
+a {
+  margin-left: 5%;
+}

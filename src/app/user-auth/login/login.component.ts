@@ -1,21 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {SharedService} from "../../utility/shared-services/shared.service";
-import {Router} from "@angular/router";
-import {RouteConstants} from "../../utility/constants/routes";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {SharedService} from '../../utility/shared-services/shared.service';
+import {Router} from '@angular/router';
+import {RouteConstants} from '../../utility/constants/routes';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
-  // Constant variable
-  routeConstant = new RouteConstants();
+  // Data variable
+  message = '';
+  successMessageSubscriber: any;
 
   // Form variables
   loginForm: FormGroup;
+
+  // State variable
+  showMessage = false;
+  error = false;
+  success = false;
 
   constructor(private _sharedService: SharedService,
               private _router: Router) {
@@ -23,6 +29,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.createLoginForm();
+    this.successMessageSubscriber = this._sharedService.getSuccessMessage().subscribe((flag) => {
+      if (flag) {
+        this.success = true;
+        this.message = 'Registration successful';
+        this.showMessage = true;
+      }
+    });
   }
 
   // Initialization methods
@@ -51,9 +64,10 @@ export class LoginComponent implements OnInit {
         this._sharedService.setToken('12345abcde');
         this._sharedService.setLoginRequired(true);
         this._router.navigate(['/' + RouteConstants.HOME]);
-        // this._sharedService.getToaster(CommonMessages.LOGIN_SUCCESSFUL, ToastType.SUCCESS);
       } else {
-        // this._sharedService.getToaster(CommonMessages.INVALID_CREDENTIAL, ToastType.ERROR);
+        this.showMessage = true;
+        this.error = true;
+        this.message = 'Invalid Username or Password';
       }
     }
   }
@@ -65,6 +79,12 @@ export class LoginComponent implements OnInit {
 
   get passwordField(): AbstractControl {
     return this.loginForm.get('password');
+  }
+
+  ngOnDestroy() {
+    if (this.successMessageSubscriber) {
+      this.successMessageSubscriber.unsubscribe();
+    }
   }
 
 }
