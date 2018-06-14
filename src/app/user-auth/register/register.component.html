@@ -42,7 +42,7 @@
         <button type="submit" class="submit-button" [disabled]="registrationForm.invalid" mat-raised-button
                 color="primary">Submit
         </button>
-        <a href="/login">Cancel</a>
+        <a routerLinkActive="active" [routerLink]="login">Cancel</a>
       </div>
       <br>
     </form>

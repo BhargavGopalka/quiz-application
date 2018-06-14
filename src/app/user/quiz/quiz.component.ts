@@ -44,6 +44,7 @@ export class QuizComponent implements OnInit {
     } else {
       this.singleQuestion = this.quizList.slice(questionNumber, questionNumber + 1);
     }
+    this.selectedOption = new FormControl();
   }
 
   // Page events

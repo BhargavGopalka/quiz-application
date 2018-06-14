@@ -81,7 +81,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.get('password');
   }
 
+  get registration() {
+    return ['/' + RouteConstants.REGISTRATION];
+  }
+
   ngOnDestroy() {
+    this._sharedService.setSuccessMessage(false);
     if (this.successMessageSubscriber) {
       this.successMessageSubscriber.unsubscribe();
     }

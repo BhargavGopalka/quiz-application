@@ -78,4 +78,8 @@ export class RegisterComponent implements OnInit {
     return this.registrationForm.get('password');
   }
 
+  get login() {
+    return ['/' + RouteConstants.LOGIN];
+  }
+
 }
