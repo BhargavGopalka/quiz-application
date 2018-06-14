@@ -9,10 +9,10 @@
         </div>
         <div *ngFor="let quiz of singleQuestion">
           <div class="question-box">
-            <span class="question-text">{{quiz.question}}</span>
+            <span class="question-text">{{(quiz.questionId+1) + '.) ' + quiz.question}}</span>
           </div>
           <div>
-            <mat-radio-group class="example-radio-group">
+            <mat-radio-group class="example-radio-group" [formControl]="selectedOption">
               <mat-radio-button class="example-radio-button" *ngFor="let option of quiz.options"
                                 [value]="option">
                 {{option.option}}
@@ -20,7 +20,8 @@
             </mat-radio-group>
           </div>
           <div class="continue-button">
-            <button mat-raised-button color="primary" (click)="getQuestions(quiz.questionId + 1)">
+            <button mat-raised-button color="primary" [disabled]="!selectedOption.value"
+                    (click)="getQuestions(quiz.questionId + 1, quiz)">
               {{quizList.length === (quiz.questionId+1) ? 'Finish' : 'Continue'}}
             </button>
           </div>

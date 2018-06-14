@@ -10,6 +10,7 @@ import {BehaviorSubject, Observable} from 'rxjs/index';
 export class SharedService {
 
   private isLoginRequired: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private answerArray: BehaviorSubject<Array<any>> = new BehaviorSubject<Array<any>>([]);
   private isRegistrationSuccessfully: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private _router: Router) {
@@ -55,6 +56,15 @@ export class SharedService {
 
   setLoginRequired(value: boolean): void {
     this.isLoginRequired.next(value);
+  }
+
+  /* Quiz Answer array */
+  getAnswerArray(): Observable<Array<any>> {
+    return this.answerArray.asObservable();
+  }
+
+  setAnswerArray(value: any[]): void {
+    this.answerArray.next(value);
   }
 
   /* Successful registration */

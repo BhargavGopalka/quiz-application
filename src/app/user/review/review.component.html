@@ -1,0 +1,43 @@
+<div class="content">
+  <div class="container">
+    <div>
+      <div class="col-sm-8 col-sm-offset-2">
+        <span class="user-heading"> Hi, {{userData.firstName}}!</span>
+        <button class="logout-button" mat-raised-button color="warn" (click)="onLogout()">Logout</button>
+        <div>
+          <h3 class="quiz-heading" *ngIf="answerArray.length !== 0">You got {{points}} Points</h3>
+        </div>
+
+        <div class="no-attempt" *ngIf="answerArray.length === 0">
+          <h1>Please complete quiz before accessing this page, Thank you.</h1>
+          <button mat-raised-button color="primary" (click)="onClickQuiz()">Take Quiz</button>
+        </div>
+
+        <div *ngIf="answerArray.length !== 0">
+          <div *ngFor="let quiz of answerArray">
+            <div class="question-box">
+            <span
+              class="question-text">{{(quiz['quizObj']['questionId']+1) + '.) ' + quiz['quizObj']['question']}}</span>
+            </div>
+            <div
+              [ngClass]="{'right-answer' : quiz['selectedOption']['isAnswer'],
+               'wrong-answer' : !(quiz['selectedOption']['isAnswer'])}">
+              <div class="incorrect-answer-section" *ngIf="!(quiz['selectedOption']['isAnswer'])">
+                <span>You answer incorrectly, your answer:</span>
+                <div>
+                  <span>{{quiz['selectedOption']['option']}}</span>
+                </div>
+              </div>
+              <div>
+                <span>Correct Answer:</span>
+                <div *ngFor="let option of quiz['quizObj']['options']">
+                  <span *ngIf="option['isAnswer']">{{option['option']}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
