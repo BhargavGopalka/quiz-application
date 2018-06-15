@@ -74,6 +74,15 @@
   margin-bottom: 20px;
 }
 
+.no-answer {
+  background-color: #ffffed;
+  color: #ffa600;
+  border: 1px solid #ffffaf;
+  font-size: 18px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .incorrect-answer-section {
   padding-bottom: 15px;
 }

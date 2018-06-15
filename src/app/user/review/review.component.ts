@@ -31,7 +31,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
   // Initialization methods
   getFinalPoints() {
     this.answerArray.map((option) => {
-      if (option['selectedOption']['isAnswer']) {
+      if (option['selectedOption'] && option['selectedOption']['isAnswer']) {
         this.points = this.points + 10;
       }
     });

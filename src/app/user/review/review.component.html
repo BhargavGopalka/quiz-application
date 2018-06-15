@@ -19,8 +19,8 @@
             <span
               class="question-text">{{(quiz['quizObj']['questionId']+1) + '.) ' + quiz['quizObj']['question']}}</span>
             </div>
-            <div
-              [ngClass]="{'right-answer' : quiz['selectedOption']['isAnswer'],
+            <div *ngIf="quiz['selectedOption']"
+                 [ngClass]="{'right-answer' : quiz['selectedOption']['isAnswer'],
                'wrong-answer' : !(quiz['selectedOption']['isAnswer'])}">
               <div class="incorrect-answer-section" *ngIf="!(quiz['selectedOption']['isAnswer'])">
                 <span>You answer incorrectly, your answer:</span>
@@ -34,6 +34,9 @@
                   <span *ngIf="option['isAnswer']">{{option['option']}}</span>
                 </div>
               </div>
+            </div>
+            <div *ngIf="!(quiz['selectedOption'])" class="no-answer">
+              <span>You have not attempted this question.</span>
             </div>
           </div>
         </div>
