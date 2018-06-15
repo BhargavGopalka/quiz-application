@@ -12,6 +12,24 @@
   padding-right: 15px;
 }
 
+.countDown {
+  float: right;
+  font-size: 50px;
+  padding: 7px;
+}
+
+.more-time {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+}
+
+.less-time {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
 .user-heading {
   font-size: 20px;
   font-weight: bold;

@@ -5,13 +5,17 @@ import {UserRoutingModule} from './user-routing/user-routing.module';
 import {AngularMaterialModule} from '../angular-material/angular-material.module';
 import {QuizComponent} from './quiz/quiz.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { ReviewComponent } from './review/review.component';
+import {ReviewComponent} from './review/review.component';
+import {CountdownModule} from 'ngx-countdown';
+import {BrowserModule} from '@angular/platform-browser';
 
 @NgModule({
   imports: [
     CommonModule,
+    BrowserModule,
     AngularMaterialModule,
     ReactiveFormsModule,
+    CountdownModule,
     UserRoutingModule
   ],
   declarations: [HomeComponent, QuizComponent, ReviewComponent]

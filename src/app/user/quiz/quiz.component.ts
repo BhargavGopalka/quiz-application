@@ -18,12 +18,14 @@ export class QuizComponent implements OnInit {
   singleQuestion = [];
   selectedOption = new FormControl();
   answersArray = [];
+  isLessTimeLeft = false;
 
   constructor(private _sharedService: SharedService,
               private _router: Router) {
   }
 
   ngOnInit() {
+    console.log(this.quizList.length);
     this.userData = this._sharedService.getUserData();
     this.getQuestions(0);
   }
@@ -39,15 +41,38 @@ export class QuizComponent implements OnInit {
     }
 
     if (this.quizList.length === questionNumber) {
-      this._sharedService.setAnswerArray(this.answersArray);
-      this._router.navigate(['/' + RouteConstants.REVIEW]);
+      this.getAnswersArray();
     } else {
       this.singleQuestion = this.quizList.slice(questionNumber, questionNumber + 1);
     }
     this.selectedOption = new FormControl();
   }
 
+  getAnswersArray() {
+    this._sharedService.setAnswerArray(this.answersArray);
+    this._router.navigate(['/' + RouteConstants.REVIEW]);
+  }
+
   // Page events
+  onNotify() {
+    this.isLessTimeLeft = true;
+  }
+
+  onFinished() {
+    const queArrayLength = this.quizList.length;
+    const ansArrayLength = this.answersArray.length;
+    if (queArrayLength !== ansArrayLength) {
+      for (let i = ansArrayLength; i !== queArrayLength; i++) {
+        const params = {
+          quizObj: this.quizList[i],
+          selectedOption: null
+        };
+        this.answersArray.push(params);
+      }
+    }
+    this.getAnswersArray();
+  }
+
   onLogout() {
     this._sharedService.logout();
   }

@@ -1,6 +1,13 @@
 <div class="content">
   <div class="container">
     <div>
+      <countdown class="countDown" [ngClass]="{'more-time' : !isLessTimeLeft, 'less-time' : isLessTimeLeft}"
+                 [config]="{leftTime: 15, notify: [ 60 ]}"
+                 (notify)="onNotify()"
+                 (finished)="onFinished()">$!m!:$!s!
+      </countdown>
+    </div>
+    <div>
       <div class="col-sm-8 col-sm-offset-2">
         <span class="user-heading"> Hi, {{userData.firstName}}!</span>
         <button class="logout-button" mat-raised-button color="warn" (click)="onLogout()">Logout</button>
