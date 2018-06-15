@@ -19,25 +19,39 @@ export class QuizComponent implements OnInit {
   selectedOption = new FormControl();
   answersArray = [];
   isLessTimeLeft = false;
+  finishQuizButton = 'primary';
 
   constructor(private _sharedService: SharedService,
               private _router: Router) {
   }
 
   ngOnInit() {
-    console.log(this.quizList.length);
     this.userData = this._sharedService.getUserData();
     this.getQuestions(0);
   }
 
   // Initialization methods
   getQuestions(questionNumber: number, quiz = {}) {
+    this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
       const params = {
         quizObj: quiz,
-        selectedOption: this.selectedOption.value
+        selectedOption: (this.selectedOption.value || null)
       };
-      this.answersArray.push(params);
+
+      if (this.answersArray.length === 0) {
+        this.answersArray.push(params);
+      } else {
+        const index = this.answersArray.findIndex(answerData => {
+          return (answerData['quizObj']['questionId'] === quiz['questionId']);
+        });
+
+        if (index === -1) {
+          this.answersArray.push(params);
+        } else {
+          this.answersArray[index] = params;
+        }
+      }
     }
 
     if (this.quizList.length === questionNumber) {

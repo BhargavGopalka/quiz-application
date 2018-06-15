@@ -26,11 +26,23 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
-          <div class="continue-button">
-            <button mat-raised-button color="primary" [disabled]="!selectedOption.value"
-                    (click)="getQuestions(quiz.questionId + 1, quiz)">
-              {{quizList.length === (quiz.questionId+1) ? 'Finish' : 'Continue'}}
+          <div class="previous-button">
+            <button mat-raised-button color="primary" [disabled]="quiz.questionId === 0"
+                    (click)="getQuestions(quiz.questionId - 1, quiz)">Previous
             </button>
+            <div class="next-button">
+              <button mat-raised-button color="{{finishQuizButton}}"
+                      (click)="getQuestions(quiz.questionId + 1, quiz)">
+                {{quizList.length === (quiz.questionId+1) ? 'Finish' : 'Next'}}
+              </button>
+            </div>
+          </div>
+          <div class="all-questions">
+        <span class="single-box" *ngFor="let quizId of quizList"
+              [ngClass]="{'answered' : false, 'not-answered' : false, 'review-marked': false}"
+              (click)="getQuestions(quizId['questionId'], quiz)">
+          {{quizId['questionId'] + 1}}
+        </span>
           </div>
         </div>
       </div>

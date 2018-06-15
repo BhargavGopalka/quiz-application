@@ -2,7 +2,7 @@
   background-color: #eee;
   height: 100%;
   width: 100%;
-  padding: 48px 30px 48px 30px;
+  padding: 48px 0px 48px 0px;
 }
 
 .container {
@@ -76,6 +76,49 @@
   margin: 15px 0;
 }
 
-.continue-button {
+.next-button {
+  float: right;
+}
+
+.previous-button {
   padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.all-questions {
+  background-color: white;
+  padding: 15px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.single-box {
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5;
+  width: 45px;
+  height: 45px;
+  border: 1px solid black;
+  margin: 5px;
+  padding: 5px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.answered {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+}
+
+.not-answered {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
+.review-marked {
+  background-color: #ffffed;
+  color: #ffa600;
+  border: 1px solid #ffffaf;
 }
