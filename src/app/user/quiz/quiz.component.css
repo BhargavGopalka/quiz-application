@@ -107,8 +107,8 @@
 
 .answered {
   background-color: #dff0d8;
-  color: #3c763d;
-  border: 1px solid #d6e9c6;
+  color: #006400;
+  border: 1px solid #3c763d;
 }
 
 .not-answered {
@@ -119,6 +119,6 @@
 
 .review-marked {
   background-color: #ffffed;
-  color: #ffa600;
-  border: 1px solid #ffffaf;
+  color: #FF8C00;
+  border: 1px solid #ffa600;
 }

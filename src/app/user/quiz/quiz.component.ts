@@ -28,38 +28,52 @@ export class QuizComponent implements OnInit {
 
   ngOnInit() {
     this.userData = this._sharedService.getUserData();
+    this.getDefaultAnswerArray();
     this.getQuestions(0);
   }
 
   // Initialization methods
+  getDefaultAnswerArray() {
+    this.quizList.map((quizQuestions) => {
+      const params = {
+        quizObj: quizQuestions,
+        isMarked: false,
+        selectedOption: null
+      };
+      this.answersArray.push(params);
+    });
+  }
+
   getQuestions(questionNumber: number, quiz = {}) {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
+
+    let previousSelection = null;
+    this.answersArray.filter((answerData) => {
+      if (answerData['quizObj']['questionId'] === quiz['questionId']) {
+        previousSelection = answerData['selectedOption'];
+      }
+    });
+
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
       const params = {
         quizObj: quiz,
         isMarked: this.isMarkedReview,
-        selectedOption: (this.selectedOption.value || null)
+        selectedOption: (this.selectedOption.value || previousSelection)
       };
 
-      if (this.answersArray.length === 0) {
-        this.answersArray.push(params);
-      } else {
-        const index = this.answersArray.findIndex(answerData => {
-          return (answerData['quizObj']['questionId'] === quiz['questionId']);
-        });
-
-        if (index === -1) {
-          this.answersArray.push(params);
-        } else {
-          this.answersArray[index] = params;
-        }
+      const index = this.answersArray.findIndex(answerData => {
+        return (answerData['quizObj']['questionId'] === quiz['questionId']);
+      });
+      if (index !== -1) {
+        this.answersArray[index] = params;
       }
     }
 
     if (this.quizList.length === questionNumber) {
       this.getAnswersArray();
     } else {
-      this.singleQuestion = this.quizList.slice(questionNumber, questionNumber + 1);
+      this.singleQuestion = this.answersArray.slice(questionNumber, questionNumber + 1);
+      this.isMarkedReview = this.singleQuestion[0]['isMarked'];
     }
     this.selectedOption = new FormControl();
   }
@@ -74,33 +88,20 @@ export class QuizComponent implements OnInit {
     this.isMarkedReview = event.checked;
   }
 
-  getReviewValue(quiz) {
-    let isMarked = false;
+
+
+  checkSelectedOption(option) {
+    let isSelected = false;
     this.answersArray.filter((answerData) => {
-      if (answerData && (answerData['quizObj']['questionId'] === quiz['questionId'])) {
-        isMarked = answerData['isMarked'];
+      if (answerData['selectedOption'] && (answerData['selectedOption']['optionId'] === option['optionId'])) {
+        isSelected = true;
       }
     });
-    return isMarked;
+    return isSelected;
   }
 
   onNotify() {
     this.isLessTimeLeft = true;
-  }
-
-  onFinished() {
-    const queArrayLength = this.quizList.length;
-    const ansArrayLength = this.answersArray.length;
-    if (queArrayLength !== ansArrayLength) {
-      for (let i = ansArrayLength; i !== queArrayLength; i++) {
-        const params = {
-          quizObj: this.quizList[i],
-          selectedOption: null
-        };
-        this.answersArray.push(params);
-      }
-    }
-    this.getAnswersArray();
   }
 
   onLogout() {
