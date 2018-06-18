@@ -20,6 +20,7 @@ export class QuizComponent implements OnInit {
   answersArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
+  isMarkedReview = false;
 
   constructor(private _sharedService: SharedService,
               private _router: Router) {
@@ -36,6 +37,7 @@ export class QuizComponent implements OnInit {
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
       const params = {
         quizObj: quiz,
+        isMarked: this.isMarkedReview,
         selectedOption: (this.selectedOption.value || null)
       };
 
@@ -68,6 +70,20 @@ export class QuizComponent implements OnInit {
   }
 
   // Page events
+  onChangeCheck(event) {
+    this.isMarkedReview = event.checked;
+  }
+
+  getReviewValue(quiz) {
+    let isMarked = false;
+    this.answersArray.filter((answerData) => {
+      if (answerData && (answerData['quizObj']['questionId'] === quiz['questionId'])) {
+        isMarked = answerData['isMarked'];
+      }
+    });
+    return isMarked;
+  }
+
   onNotify() {
     this.isLessTimeLeft = true;
   }

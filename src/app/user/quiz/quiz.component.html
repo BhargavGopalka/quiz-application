@@ -37,6 +37,12 @@
               </button>
             </div>
           </div>
+          <div>
+            <mat-checkbox class="example-margin"
+                          (change)="onChangeCheck($event)"
+                          [checked]="getReviewValue(quiz)">Marked for review
+            </mat-checkbox>
+          </div>
           <div class="all-questions">
         <span class="single-box" *ngFor="let quizId of quizList"
               [ngClass]="{'answered' : false, 'not-answered' : false, 'review-marked': false}"
