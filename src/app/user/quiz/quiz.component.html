@@ -29,18 +29,18 @@
           </div>
           <div class="previous-button">
             <button mat-raised-button color="primary" [disabled]="quiz['quizObj']['questionId'] === 0"
-                    (click)="getQuestions(quiz['quizObj']['questionId'] - 1, quiz['quizObj'])">Previous
+                    (click)="getQuestions(quiz['quizObj']['questionId'] - 1, quiz)">Previous
             </button>
             <div class="next-button">
               <button mat-raised-button color="{{finishQuizButton}}"
-                      (click)="getQuestions(quiz['quizObj']['questionId'] + 1, quiz['quizObj'])">
+                      (click)="getQuestions(quiz['quizObj']['questionId'] + 1, quiz)">
                 {{quizList.length === (quiz['quizObj']['questionId']+1) ? 'Finish' : 'Next'}}
               </button>
             </div>
           </div>
           <div>
             <mat-checkbox class="example-margin"
-                          (change)="onChangeCheck($event)"
+                          (change)="onChangeCheck(quiz,$event)"
                           [checked]="quiz['isMarked']">Marked for review
             </mat-checkbox>
           </div>
@@ -48,7 +48,7 @@
         <span class="single-box" *ngFor="let quizId of answersArray"
               [ngClass]="{'review-marked': quizId['isMarked'], 'answered' : quizId['selectedOption'],
                'not-answered' : (!(quizId['selectedOption']) && quizId['isNotAttempted'])}"
-              (click)="getQuestions(quizId['quizObj']['questionId'], quiz['quizObj'])">
+              (click)="getQuestions(quizId['quizObj']['questionId'], quiz)">
           {{quizId['quizObj']['questionId'] + 1}}
         </span>
           </div>

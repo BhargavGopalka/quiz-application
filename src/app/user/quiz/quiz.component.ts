@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {SharedService} from '../../utility/shared-services/shared.service';
-import {Quiz} from './quiz-questions';
 import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {RouteConstants} from '../../utility/constants/routes';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/internal/operators';
+import {Observable} from 'rxjs/index';
 
 @Component({
   selector: 'app-quiz',
@@ -14,26 +16,38 @@ export class QuizComponent implements OnInit {
 
   // Data related variable
   userData: any;
-  quizList = Quiz;
+  quizList: any[];
   singleQuestion = [];
   selectedOption = new FormControl();
   answersArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
-  isMarkedReview = false;
 
   constructor(private _sharedService: SharedService,
-              private _router: Router) {
+              private _router: Router,
+              private _http: HttpClient) {
   }
 
   ngOnInit() {
     this.userData = this._sharedService.getUserData();
-    this.getDefaultAnswerArray();
-    this.getQuestions(0);
+    this.getQuizList();
   }
 
   // Initialization methods
-  getDefaultAnswerArray() {
+  getJsonData(): Observable<any> {
+    return this._http.get('./assets/quiz-questions.json').pipe(
+      map((res: any) => res)
+    );
+  }
+
+  getQuizList() {
+    this.getJsonData().subscribe((response) => {
+      this.handleQuizListResponse(response);
+    });
+  }
+
+  handleQuizListResponse(response: any) {
+    this.quizList = response['quiz'];
     this.quizList.map((quizQuestions) => {
       const params = {
         quizObj: quizQuestions,
@@ -43,28 +57,29 @@ export class QuizComponent implements OnInit {
       };
       this.answersArray.push(params);
     });
+    this.getQuestions(0);
   }
 
   getQuestions(questionNumber: number, quiz = {}) {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
 
     let previousSelection = null;
-    this.answersArray.filter((answerData) => {
-      if (answerData['quizObj']['questionId'] === quiz['questionId']) {
-        previousSelection = answerData['selectedOption'];
-      }
-    });
 
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
+      this.answersArray.filter((answerData) => {
+        if (answerData['quizObj']['questionId'] === quiz['quizObj']['questionId']) {
+          previousSelection = answerData['selectedOption'];
+        }
+      });
+
       const params = {
-        quizObj: quiz,
-        isMarked: this.isMarkedReview,
+        quizObj: quiz['quizObj'],
+        isMarked: quiz['isMarked'],
         selectedOption: (this.selectedOption.value || previousSelection),
         isNotAttempted: true
       };
-
       const index = this.answersArray.findIndex(answerData => {
-        return (answerData['quizObj']['questionId'] === quiz['questionId']);
+        return (answerData['quizObj']['questionId'] === quiz['quizObj']['questionId']);
       });
       if (index !== -1) {
         this.answersArray[index] = params;
@@ -75,7 +90,6 @@ export class QuizComponent implements OnInit {
       this.getAnswersArray();
     } else {
       this.singleQuestion = this.answersArray.slice(questionNumber, questionNumber + 1);
-      this.isMarkedReview = this.singleQuestion[0]['isMarked'];
     }
     this.selectedOption = new FormControl();
   }
@@ -86,8 +100,8 @@ export class QuizComponent implements OnInit {
   }
 
   // Page events
-  onChangeCheck(event) {
-    this.isMarkedReview = event.checked;
+  onChangeCheck(quiz, event) {
+    quiz.isMarked = event.checked;
   }
 
 

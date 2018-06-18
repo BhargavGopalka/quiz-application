@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: RouteConstants.LOGIN,
+    redirectTo: RouteConstants.HOME,
     pathMatch: 'full',
   }
 ];

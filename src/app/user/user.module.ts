@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ReviewComponent} from './review/review.component';
 import {CountdownModule} from 'ngx-countdown';
 import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {BrowserModule} from '@angular/platform-browser';
     AngularMaterialModule,
     ReactiveFormsModule,
     CountdownModule,
+    HttpClientModule,
     UserRoutingModule
   ],
   declarations: [HomeComponent, QuizComponent, ReviewComponent]
