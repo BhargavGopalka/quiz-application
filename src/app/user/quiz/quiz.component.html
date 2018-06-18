@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <countdown class="countDown" [ngClass]="{'more-time' : !isLessTimeLeft, 'less-time' : isLessTimeLeft}"
-                 [config]="{leftTime: 300, notify: [ 60 ]}"
+                 [config]="{leftTime: 36000, notify: [ 60 ]}"
                  (notify)="onNotify()"
                  (finished)="getAnswersArray()">$!m!:$!s!
       </countdown>
