@@ -1,5 +1,5 @@
 <div class="login-content">
-  <div [ngClass]="{'error-message' : error, 'success-message' : success}" *ngIf="showMessage">
+  <div [ngClass]="{'error-message' : error, 'success-message' : success}" *ngIf="message">
     {{message}}
   </div>
   <div class="col-md-6 col-md-offset-3 ng-scope">
@@ -10,7 +10,7 @@
         <mat-form-field>
           <span class="form-field">Username</span>
           <input #userName matInput formControlName="username">
-          <mat-error class="error" *ngIf="!(userNameField.value)">Username is required</mat-error>
+          <mat-error class="error" *ngIf="!(userNameField.valid)">Username is required</mat-error>
         </mat-form-field>
       </div>
       <br><br>
@@ -18,7 +18,7 @@
         <mat-form-field>
           <span class="form-field">Password</span>
           <input type="password" matInput formControlName="password">
-          <mat-error class="error" *ngIf="!(passwordField.value)">Password is required</mat-error>
+          <mat-error class="error" *ngIf="!(passwordField.valid)">Password is required</mat-error>
         </mat-form-field>
       </div>
       <br>

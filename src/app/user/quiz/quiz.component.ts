@@ -38,7 +38,8 @@ export class QuizComponent implements OnInit {
       const params = {
         quizObj: quizQuestions,
         isMarked: false,
-        selectedOption: null
+        selectedOption: null,
+        isNotAttempted: false
       };
       this.answersArray.push(params);
     });
@@ -58,7 +59,8 @@ export class QuizComponent implements OnInit {
       const params = {
         quizObj: quiz,
         isMarked: this.isMarkedReview,
-        selectedOption: (this.selectedOption.value || previousSelection)
+        selectedOption: (this.selectedOption.value || previousSelection),
+        isNotAttempted: true
       };
 
       const index = this.answersArray.findIndex(answerData => {
@@ -87,7 +89,6 @@ export class QuizComponent implements OnInit {
   onChangeCheck(event) {
     this.isMarkedReview = event.checked;
   }
-
 
 
   checkSelectedOption(option) {

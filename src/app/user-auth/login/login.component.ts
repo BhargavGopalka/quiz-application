@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
 
   // State variable
-  showMessage = false;
   error = false;
   success = false;
 
@@ -36,7 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       if (flag) {
         this.success = true;
         this.message = 'Registration successful';
-        this.showMessage = true;
       }
     });
     this.userNameElementRef.nativeElement.focus();
@@ -69,7 +67,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._sharedService.setLoginRequired(true);
         this._router.navigate(['/' + RouteConstants.HOME]);
       } else {
-        this.showMessage = true;
         this.error = true;
         this.message = 'Invalid Username or Password';
       }
@@ -97,14 +94,3 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
 }
-
-
-// review changes optimization --tarang sachdev
-
-/* in html page don't check error by firstNameField.value instead use firstNameField.valid
-
- 2. this.showMessage = true; no need to set this instead just clear message variable value(set to blank)
- and remove ngIf from html -> showMessage and remove showMessage variable from ts file also
- */
-
-

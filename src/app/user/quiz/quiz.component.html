@@ -2,9 +2,9 @@
   <div class="container">
     <div>
       <countdown class="countDown" [ngClass]="{'more-time' : !isLessTimeLeft, 'less-time' : isLessTimeLeft}"
-                 [config]="{leftTime: 36000, notify: [ 60 ]}"
+                 [config]="{leftTime: 300, notify: [ 60 ]}"
                  (notify)="onNotify()"
-                 (finished)="getAnswersArray()">$!m!:$!s!
+                 (finished)="getAnswersArray()">$!h!:$!m!:$!s!
       </countdown>
     </div>
     <div>
@@ -46,7 +46,8 @@
           </div>
           <div class="all-questions">
         <span class="single-box" *ngFor="let quizId of answersArray"
-              [ngClass]="{'review-marked': quizId['isMarked'], 'answered' : quizId['selectedOption'], 'not-answered' : false}"
+              [ngClass]="{'review-marked': quizId['isMarked'], 'answered' : quizId['selectedOption'],
+               'not-answered' : (!(quizId['selectedOption']) && quizId['isNotAttempted'])}"
               (click)="getQuestions(quizId['quizObj']['questionId'], quiz['quizObj'])">
           {{quizId['quizObj']['questionId'] + 1}}
         </span>
