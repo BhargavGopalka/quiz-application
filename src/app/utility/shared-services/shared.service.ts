@@ -93,11 +93,3 @@ export class SharedService {
     this._router.navigate(['/' + RouteConstants.LOGIN]);
   }
 }
-
-// review changes optimization --tarang sachdev
-
-/* in html page don't check error by firstNameField.value instead use firstNameField.valid
- 
- 2. this.showMessage = true; no need to set this instead just clear message variable value(set to blank)
- and remove ngIf from html -> showMessage and remove showMessage variable from ts file also
- */

@@ -10,23 +10,23 @@ import {RouteConstants} from '../../utility/constants/routes';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
+  
   // Data variable
   message = '';
   successMessageSubscriber: any;
-
+  
   // Form variables
   loginForm: FormGroup;
-
+  
   // State variable
   showMessage = false;
   error = false;
   success = false;
-
+  
   constructor(private _sharedService: SharedService,
               private _router: Router) {
   }
-
+  
   ngOnInit() {
     this.createLoginForm();
     this.successMessageSubscriber = this._sharedService.getSuccessMessage().subscribe((flag) => {
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  
   // Initialization methods
   createLoginForm() {
     this.loginForm = new FormGroup({
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: new FormControl('', [Validators.required])
     });
   }
-
+  
   // Page events
   onSubmitLogin(form: FormGroup) {
     if (form.valid) {
@@ -71,25 +71,36 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     }
   }
-
+  
   // get methods
   get userNameField(): AbstractControl {
     return this.loginForm.get('username');
   }
-
+  
   get passwordField(): AbstractControl {
     return this.loginForm.get('password');
   }
-
+  
   get registration() {
     return ['/' + RouteConstants.REGISTRATION];
   }
-
+  
   ngOnDestroy() {
     this._sharedService.setSuccessMessage(false);
     if (this.successMessageSubscriber) {
       this.successMessageSubscriber.unsubscribe();
     }
   }
-
+  
 }
+
+
+// review changes optimization --tarang sachdev
+
+/* in html page don't check error by firstNameField.value instead use firstNameField.valid
+ 
+ 2. this.showMessage = true; no need to set this instead just clear message variable value(set to blank)
+ and remove ngIf from html -> showMessage and remove showMessage variable from ts file also
+ */
+
+
