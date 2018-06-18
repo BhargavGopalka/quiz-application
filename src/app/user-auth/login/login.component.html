@@ -9,7 +9,7 @@
       <div class="example-container">
         <mat-form-field>
           <span class="form-field">Username</span>
-          <input matInput formControlName="username">
+          <input #userName matInput formControlName="username">
           <mat-error class="error" *ngIf="!(userNameField.value)">Username is required</mat-error>
         </mat-form-field>
       </div>

@@ -8,7 +8,7 @@
       <br>
       <div class="example-container">
         <mat-form-field>
-          <input matInput placeholder="Enter your first name" formControlName="firstName">
+          <input #firstName matInput placeholder="Enter your first name" formControlName="firstName">
           <mat-error class="error" *ngIf="!(firstNameField.value) && firstNameField.touched">First name is required
           </mat-error>
         </mat-form-field>

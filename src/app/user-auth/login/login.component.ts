@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../../utility/shared-services/shared.service';
 import {Router} from '@angular/router';
@@ -10,6 +10,9 @@ import {RouteConstants} from '../../utility/constants/routes';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
+  // Angular variables
+  @ViewChild('userName') public userNameElementRef: ElementRef;
 
   // Data variable
   message = '';
@@ -36,6 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.showMessage = true;
       }
     });
+    this.userNameElementRef.nativeElement.focus();
   }
 
   // Initialization methods

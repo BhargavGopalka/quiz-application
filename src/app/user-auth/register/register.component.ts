@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../../utility/shared-services/shared.service';
 import {Router} from '@angular/router';
@@ -10,6 +10,9 @@ import {RouteConstants} from '../../utility/constants/routes';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
+  // Angular variables
+  @ViewChild('firstName') public firstNameElementRef: ElementRef;
 
   // Data related variable
   message = '';
@@ -26,6 +29,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.createRegistrationForm();
+    this.firstNameElementRef.nativeElement.focus();
   }
 
   // Initialization methods
