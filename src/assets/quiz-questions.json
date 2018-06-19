@@ -3,6 +3,7 @@
     {
       "question": "Which of the following is correct about Services?",
       "questionId": 0,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "Angular 2 Services are a set of code that can be shared by different components of an application.",
@@ -29,6 +30,7 @@
     {
       "question": "Which of the following is true?",
       "questionId": 1,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "Angular 2 Service can be used to bring the modules together.",
@@ -55,6 +57,7 @@
     {
       "question": "Which of the following is correct about Import Array in Angular 2 Modules?",
       "questionId": 2,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "Import array can be used to import the functionality from other Angular JS modules.",
@@ -81,6 +84,7 @@
     {
       "question": "Which of the following is correct about Angular 2 Routing?",
       "questionId": 3,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "Routing helps in directing users to different pages based on the option they choose on the main page.",
@@ -107,6 +111,7 @@
     {
       "question": "Which of the following is correct about tsconfig.json?",
       "questionId": 4,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "The target for the compilation is generally es5 because most browsers can only understand ES5 typescript.",
@@ -133,6 +138,7 @@
     {
       "question": "Which of the following filter is used to convert input to all lowercase?",
       "questionId": 5,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "lowercase",
@@ -159,6 +165,7 @@
     {
       "question": "Which of the following filter is used to convert an input string to date format.",
       "questionId": 6,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "dateformat",
@@ -185,6 +192,7 @@
     {
       "question": "Which of the following is correct about lifecycle hook - ngOnInit.",
       "questionId": 7,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "When the value of a data bound property changes, then this method is called.",
@@ -211,6 +219,7 @@
     {
       "question": "Which of the following is correct about lifecycle hook - ngAfterViewChecked.",
       "questionId": 8,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "This is called in response after Angular checks the content projected into the component.",
@@ -237,6 +246,7 @@
     {
       "question": "Angular 2 is entirely component based. Controllers and $scope are no longer used. They have been replaced by . . . . . . . and . . . . . . . .",
       "questionId": 9,
+      "questionType": "multiple_choice",
       "options": [
         {
           "option": "components, controllers",
@@ -256,6 +266,72 @@
         {
           "option": "controllers, directives",
           "optionId": 1904,
+          "isAnswer": false
+        }
+      ]
+    },
+    {
+      "question": "In Angular, *hide use to hide/remove HTML element?",
+      "questionId": 10,
+      "questionType": "true/false",
+      "options": [
+        {
+          "option": "True",
+          "optionId": 10001,
+          "isAnswer": false
+        },
+        {
+          "option": "False",
+          "optionId": 10002,
+          "isAnswer": true
+        }
+      ]
+    },
+    {
+      "question": "In Angular, *ngIf use to hide/remove HTML element?",
+      "questionId": 11,
+      "questionType": "true/false",
+      "options": [
+        {
+          "option": "True",
+          "optionId": 11001,
+          "isAnswer": true
+        },
+        {
+          "option": "False",
+          "optionId": 11002,
+          "isAnswer": false
+        }
+      ]
+    },
+    {
+      "question": "Structural directives in Angular?",
+      "questionId": 12,
+      "questionType": "multiple_answer_selection",
+      "options": [
+        {
+          "option": "NgIf",
+          "optionId": 12001,
+          "isAnswer": true
+        },
+        {
+          "option": "@Input",
+          "optionId": 12002,
+          "isAnswer": false
+        },
+        {
+          "option": "NgFor",
+          "optionId": 12003,
+          "isAnswer": true
+        },
+        {
+          "option": "NgSwitch",
+          "optionId": 12004,
+          "isAnswer": true
+        },
+        {
+          "option": "@Output",
+          "optionId": 12005,
           "isAnswer": false
         }
       ]

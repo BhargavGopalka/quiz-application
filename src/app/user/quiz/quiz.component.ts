@@ -6,6 +6,7 @@ import {RouteConstants} from '../../utility/constants/routes';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs/index';
+import {QuestionType} from '../../utility/constants/base-constants';
 
 @Component({
   selector: 'app-quiz',
@@ -13,6 +14,9 @@ import {Observable} from 'rxjs/index';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
+
+  // Constant variables
+  questionType = QuestionType;
 
   // Data related variable
   userData: any;
@@ -22,6 +26,8 @@ export class QuizComponent implements OnInit {
   answersArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
+  multipleAnswers = [];
+  previousSelection = null;
 
   constructor(private _sharedService: SharedService,
               private _router: Router,
@@ -63,19 +69,21 @@ export class QuizComponent implements OnInit {
   getQuestions(questionNumber: number, quiz = {}) {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
 
-    let previousSelection = null;
 
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
-      this.answersArray.filter((answerData) => {
-        if (answerData['quizObj']['questionId'] === quiz['quizObj']['questionId']) {
-          previousSelection = answerData['selectedOption'];
-        }
-      });
+
+      let selectedAnswer: any;
+      if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
+        (quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE)) {
+        selectedAnswer = (this.selectedOption.value || this.previousSelection);
+      } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
+        selectedAnswer = this.multipleAnswers;
+      }
 
       const params = {
         quizObj: quiz['quizObj'],
         isMarked: quiz['isMarked'],
-        selectedOption: (this.selectedOption.value || previousSelection),
+        selectedOption: selectedAnswer,
         isNotAttempted: true
       };
       const index = this.answersArray.findIndex(answerData => {
@@ -90,6 +98,12 @@ export class QuizComponent implements OnInit {
       this.getAnswersArray();
     } else {
       this.singleQuestion = this.answersArray.slice(questionNumber, questionNumber + 1);
+      this.previousSelection = this.singleQuestion[0]['selectedOption'];
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
+        this.multipleAnswers = this.previousSelection || [];
+      } else {
+        this.multipleAnswers = [];
+      }
     }
     this.selectedOption = new FormControl();
   }
@@ -104,6 +118,31 @@ export class QuizComponent implements OnInit {
     quiz.isMarked = event.checked;
   }
 
+  onChangeMultipleAnswers(event, option) {
+    if (event) {
+      this.multipleAnswers.push(option);
+    } else {
+      const index = this.multipleAnswers.findIndex(answerData => {
+        return (answerData['optionId'] === option['optionId']);
+      });
+      if (index > -1) {
+        this.multipleAnswers.splice(index, 1);
+      }
+    }
+  }
+
+  getPreviouslySelectedAnswers(option: any, quiz: any) {
+    const selectedAnswersArray = quiz['selectedOption'] || [];
+    let isSelected = false;
+    if (selectedAnswersArray.length > 0) {
+      selectedAnswersArray.filter((opt) => {
+        if (opt['optionId'] === option['optionId']) {
+          isSelected = true;
+        }
+      });
+    }
+    return isSelected;
+  }
 
   checkSelectedOption(option) {
     let isSelected = false;
