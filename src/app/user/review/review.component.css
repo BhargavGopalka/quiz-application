@@ -86,3 +86,12 @@
 .incorrect-answer-section {
   padding-bottom: 15px;
 }
+
+.text-answer {
+  background-color: #daebe8;
+  color: #667292;
+  border: 1px solid #b7d7e8;
+  font-size: 18px;
+  padding: 10px;
+  margin-bottom: 20px;
+}

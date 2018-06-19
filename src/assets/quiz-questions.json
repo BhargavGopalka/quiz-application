@@ -335,6 +335,18 @@
           "isAnswer": false
         }
       ]
+    },
+    {
+      "question": "What are Angular 2 directives? Explain with examples.",
+      "questionId": 13,
+      "questionType": "descriptive",
+      "options": []
+    },
+    {
+      "question": "What is routing?",
+      "questionId": 14,
+      "questionType": "descriptive",
+      "options": []
     }
   ]
 }

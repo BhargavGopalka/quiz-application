@@ -77,15 +77,21 @@ export class ReviewComponent implements OnInit, OnDestroy {
     return isRightAnswer;
   }
 
+  getDescriptiveAnswer(quiz: any) {
+    return (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE);
+  }
+
   getAttemptStatus(quiz: any) {
     let isAttempted = false;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
       (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
       isAttempted = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
-      if (quiz['selectedOption']['length'] > 0) {
+      if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
         isAttempted = true;
       }
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+      isAttempted = !!(quiz['selectedOption']);
     }
     return isAttempted;
   }

@@ -129,3 +129,11 @@
   align-items: center;
   height: 45px;
 }
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-text-area {
+  height: 125px;
+}

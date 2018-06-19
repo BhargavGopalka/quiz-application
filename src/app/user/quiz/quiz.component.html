@@ -20,8 +20,9 @@
               class="question-text">{{(quiz['quizObj']['questionId']+1) + '.) ' + quiz['quizObj']['question']}}</span>
           </div>
 
-          <!-- Multiple choice answers -->
-          <div *ngIf="quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE">
+          <!-- Multiple choice questions OR True/false questions -->
+          <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE)
+          || (quiz['quizObj']['questionType'] === questionType.TRUE_FALSE)">
             <mat-radio-group class="example-radio-group" [formControl]="selectedOption">
               <mat-radio-button class="example-radio-button" *ngFor="let option of quiz['quizObj']['options']"
                                 [value]="option" [checked]="checkSelectedOption(option)">
@@ -30,14 +31,14 @@
             </mat-radio-group>
           </div>
 
-          <!-- True/false answers -->
-          <div *ngIf="quiz['quizObj']['questionType'] === questionType.TRUE_FALSE">
-            <mat-radio-group class="example-radio-group" [formControl]="selectedOption">
-              <mat-radio-button class="example-radio-button" *ngFor="let option of quiz['quizObj']['options']"
-                                [value]="option" [checked]="checkSelectedOption(option)">
-                {{option.option}}
-              </mat-radio-button>
-            </mat-radio-group>
+          <!-- Descriptive questions -->
+          <div *ngIf="quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE">
+            <mat-form-field class="mat-form-field">
+              <mat-label>Enter your answer here</mat-label>
+              <textarea matInput
+                        [(ngModel)]="textAnswer"
+                        class="mat-text-area"></textarea>
+            </mat-form-field>
           </div>
 
           <!-- Multiple selection answers -->
@@ -45,7 +46,7 @@
             <div *ngFor="let option of quiz['quizObj']['options']">
               <mat-checkbox class="example-section" [value]="option"
                             (change)="onChangeMultipleAnswers($event.checked,option)"
-              [checked]="getPreviouslySelectedAnswers(option, quiz)">{{option.option}}
+                            [checked]="getPreviouslySelectedAnswers(option, quiz)">{{option.option}}
               </mat-checkbox>
             </div>
           </div>
@@ -69,8 +70,8 @@
           </div>
           <div class="all-questions">
         <span class="single-box" *ngFor="let quizId of answersArray"
-              [ngClass]="{'review-marked': quizId['isMarked'], 'answered' : quizId['selectedOption'],
-               'not-answered' : (!(quizId['selectedOption']) && quizId['isNotAttempted'])}"
+              [ngClass]="{'review-marked': quizId['isMarked'], 'answered' : getAnswerStatus(quizId),
+               'not-answered' :getNotAnswerStatus(quizId)}"
               (click)="getQuestions(quizId['quizObj']['questionId'], quiz)">
           {{quizId['quizObj']['questionId'] + 1}}
         </span>

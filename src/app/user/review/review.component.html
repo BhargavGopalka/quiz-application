@@ -21,7 +21,16 @@
             </div>
             <div *ngIf="getAttemptStatus(quiz)"
                  [ngClass]="{'right-answer' : getAnswerStatus(quiz),
-               'wrong-answer' : !(getAnswerStatus(quiz))}">
+               'wrong-answer' : !(getAnswerStatus(quiz)),
+               'text-answer' : getDescriptiveAnswer(quiz)}">
+
+              <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE)">
+                <span>Your Answer:</span>
+                <div>
+                  <span>{{quiz['selectedOption']['answer']}}</span>
+                </div>
+              </div>
+
               <div *ngIf="((quiz['quizObj']['questionType'] === questionType.TRUE_FALSE) ||
               (quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE) ||
               (quiz['quizObj']['questionType'] === questionType.MULTIPLE_ANSWER_SELECTION))">

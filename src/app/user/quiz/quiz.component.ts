@@ -23,6 +23,7 @@ export class QuizComponent implements OnInit {
   quizList: any[];
   singleQuestion = [];
   selectedOption = new FormControl();
+  textAnswer = '';
   answersArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
@@ -69,15 +70,22 @@ export class QuizComponent implements OnInit {
   getQuestions(questionNumber: number, quiz = {}) {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
 
-
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
-
       let selectedAnswer: any;
+
       if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
         (quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE)) {
         selectedAnswer = (this.selectedOption.value || this.previousSelection);
       } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
         selectedAnswer = this.multipleAnswers;
+      } else if (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
+        if (this.textAnswer) {
+          selectedAnswer = {
+            answer: this.textAnswer
+          };
+        } else {
+          selectedAnswer = null;
+        }
       }
 
       const params = {
@@ -94,18 +102,26 @@ export class QuizComponent implements OnInit {
       }
     }
 
+    this.selectedOption = new FormControl();
     if (this.quizList.length === questionNumber) {
       this.getAnswersArray();
     } else {
       this.singleQuestion = this.answersArray.slice(questionNumber, questionNumber + 1);
       this.previousSelection = this.singleQuestion[0]['selectedOption'];
+
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
         this.multipleAnswers = this.previousSelection || [];
       } else {
         this.multipleAnswers = [];
       }
+
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
+        this.textAnswer = (this.previousSelection && this.previousSelection['answer'])
+          ? this.previousSelection['answer'] : '';
+      } else {
+        this.textAnswer = '';
+      }
     }
-    this.selectedOption = new FormControl();
   }
 
   getAnswersArray() {
@@ -129,6 +145,42 @@ export class QuizComponent implements OnInit {
         this.multipleAnswers.splice(index, 1);
       }
     }
+  }
+
+  getAnswerStatus(quiz: any) {
+    let isAnswered = false;
+    if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
+      isAnswered = !!(quiz['selectedOption']);
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
+      if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
+        isAnswered = true;
+      }
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+      if (quiz['selectedOption']) {
+        isAnswered = true;
+      }
+    }
+    return isAnswered;
+  }
+
+  getNotAnswerStatus(quiz: any) {
+    let isNotAnswered = false;
+    if (quiz['isNotAttempted']) {
+      if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
+        (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
+        isNotAnswered = !(quiz['selectedOption']);
+      } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
+        if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {
+          isNotAnswered = true;
+        }
+      } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+        if (!quiz['selectedOption']) {
+          isNotAnswered = true;
+        }
+      }
+    }
+    return isNotAnswered;
   }
 
   getPreviouslySelectedAnswers(option: any, quiz: any) {
