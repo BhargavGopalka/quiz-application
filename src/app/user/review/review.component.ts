@@ -30,7 +30,6 @@ export class ReviewComponent implements OnInit, OnDestroy {
       this.answerArray = response;
     });
     this.getFinalPoints();
-    console.log(this.answerArray);
   }
 
   // Initialization methods

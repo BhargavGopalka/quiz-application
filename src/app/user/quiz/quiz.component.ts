@@ -41,6 +41,7 @@ export class QuizComponent implements OnInit {
   }
 
   // Initialization methods
+  /* Getting quiz questions json data */
   getJsonData(): Observable<any> {
     return this._http.get('./assets/quiz-questions.json').pipe(
       map((res: any) => res)
@@ -64,49 +65,29 @@ export class QuizComponent implements OnInit {
       };
       this.answersArray.push(params);
     });
-    this.getQuestions(0);
+    this.getParticularQuestion(0);
   }
 
+  /* Getting requested question from list based on question number */
+  getParticularQuestion(questionNumber: number) {
+    this.singleQuestion = this.answersArray.slice(questionNumber, questionNumber + 1);
+  }
+
+  // Page events
   getQuestions(questionNumber: number, quiz = {}) {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
 
+    /* To check if quiz isn't empty and is Object */
     if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
-      let selectedAnswer: any;
-
-      if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
-        (quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE)) {
-        selectedAnswer = (this.selectedOption.value || this.previousSelection);
-      } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
-        selectedAnswer = this.multipleAnswers;
-      } else if (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
-        if (this.textAnswer) {
-          selectedAnswer = {
-            answer: this.textAnswer
-          };
-        } else {
-          selectedAnswer = null;
-        }
-      }
-
-      const params = {
-        quizObj: quiz['quizObj'],
-        isMarked: quiz['isMarked'],
-        selectedOption: selectedAnswer,
-        isNotAttempted: true
-      };
-      const index = this.answersArray.findIndex(answerData => {
-        return (answerData['quizObj']['questionId'] === quiz['quizObj']['questionId']);
-      });
-      if (index !== -1) {
-        this.answersArray[index] = params;
-      }
+      this.updateAnswerArray(quiz);
     }
 
     this.selectedOption = new FormControl();
+    /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
-      this.getAnswersArray();
+      this.onFinishQuiz();
     } else {
-      this.singleQuestion = this.answersArray.slice(questionNumber, questionNumber + 1);
+      this.getParticularQuestion(questionNumber);
       this.previousSelection = this.singleQuestion[0]['selectedOption'];
 
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
@@ -121,19 +102,52 @@ export class QuizComponent implements OnInit {
       } else {
         this.textAnswer = '';
       }
+
     }
   }
 
-  getAnswersArray() {
+  /* Updating answerArray before getting requested question */
+  updateAnswerArray(quiz: any) {
+    let selectedAnswer: any;
+    if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE)) {
+      selectedAnswer = (this.selectedOption.value || this.previousSelection);
+    } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
+      selectedAnswer = this.multipleAnswers;
+    } else if (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
+      if (this.textAnswer) {
+        selectedAnswer = {
+          answer: this.textAnswer
+        };
+      } else {
+        selectedAnswer = null;
+      }
+    }
+
+    const params = {
+      quizObj: quiz['quizObj'],
+      isMarked: quiz['isMarked'],
+      selectedOption: selectedAnswer,
+      isNotAttempted: true
+    };
+    const index = this.answersArray.findIndex(answerData => {
+      return (answerData['quizObj']['questionId'] === quiz['quizObj']['questionId']);
+    });
+    if (index !== -1) {
+      this.answersArray[index] = params;
+    }
+  }
+
+  onFinishQuiz() {
     this._sharedService.setAnswerArray(this.answersArray);
     this._router.navigate(['/' + RouteConstants.REVIEW]);
   }
 
-  // Page events
-  onChangeCheck(quiz, event) {
+  onChangeMarkedForReviewStatus(quiz, event) {
     quiz.isMarked = event.checked;
   }
 
+  /* For multiple answer selection */
   onChangeMultipleAnswers(event, option) {
     if (event) {
       this.multipleAnswers.push(option);
@@ -147,42 +161,18 @@ export class QuizComponent implements OnInit {
     }
   }
 
-  getAnswerStatus(quiz: any) {
-    let isAnswered = false;
-    if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
-      isAnswered = !!(quiz['selectedOption']);
-    } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
-      if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
-        isAnswered = true;
+  /* In the single option and true/false question type, getting status if particular option is previously selected */
+  checkSelectedOption(option) {
+    let isSelected = false;
+    this.answersArray.filter((answerData) => {
+      if (answerData['selectedOption'] && (answerData['selectedOption']['optionId'] === option['optionId'])) {
+        isSelected = true;
       }
-    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
-      if (quiz['selectedOption']) {
-        isAnswered = true;
-      }
-    }
-    return isAnswered;
+    });
+    return isSelected;
   }
 
-  getNotAnswerStatus(quiz: any) {
-    let isNotAnswered = false;
-    if (quiz['isNotAttempted']) {
-      if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
-        (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
-        isNotAnswered = !(quiz['selectedOption']);
-      } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
-        if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {
-          isNotAnswered = true;
-        }
-      } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
-        if (!quiz['selectedOption']) {
-          isNotAnswered = true;
-        }
-      }
-    }
-    return isNotAnswered;
-  }
-
+  /* In the multi answer question type, getting status if particular option is previously selected or not */
   getPreviouslySelectedAnswers(option: any, quiz: any) {
     const selectedAnswersArray = quiz['selectedOption'] || [];
     let isSelected = false;
@@ -196,14 +186,36 @@ export class QuizComponent implements OnInit {
     return isSelected;
   }
 
-  checkSelectedOption(option) {
-    let isSelected = false;
-    this.answersArray.filter((answerData) => {
-      if (answerData['selectedOption'] && (answerData['selectedOption']['optionId'] === option['optionId'])) {
-        isSelected = true;
+  /* Getting status if user has selected any answer for this particular question */
+  getAnswerStatus(quiz: any) {
+    let isAnswered = false;
+    if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+      isAnswered = !!(quiz['selectedOption']);
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
+      if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
+        isAnswered = true;
       }
-    });
-    return isSelected;
+    }
+    return isAnswered;
+  }
+
+  /* Getting status if user has attempted the question but not answer it */
+  getNotAnswerStatus(quiz: any) {
+    let isNotAnswered = false;
+    if (quiz['isNotAttempted']) {
+      if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
+        (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
+        (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+        isNotAnswered = !(quiz['selectedOption']);
+      } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
+        if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {
+          isNotAnswered = true;
+        }
+      }
+    }
+    return isNotAnswered;
   }
 
   onNotify() {

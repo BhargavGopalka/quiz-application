@@ -4,7 +4,7 @@
       <countdown class="countDown" [ngClass]="{'more-time' : !isLessTimeLeft, 'less-time' : isLessTimeLeft}"
                  [config]="{leftTime: 300, notify: [ 60 ]}"
                  (notify)="onNotify()"
-                 (finished)="getAnswersArray()">$!h!:$!m!:$!s!
+                 (finished)="onFinishQuiz()">$!h!:$!m!:$!s!
       </countdown>
     </div>
     <div>
@@ -64,7 +64,7 @@
           </div>
           <div>
             <mat-checkbox class="example-section"
-                          (change)="onChangeCheck(quiz,$event)"
+                          (change)="onChangeMarkedForReviewStatus(quiz,$event)"
                           [checked]="quiz['isMarked']">Marked for review
             </mat-checkbox>
           </div>
