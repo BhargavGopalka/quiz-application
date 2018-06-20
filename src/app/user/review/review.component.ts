@@ -42,6 +42,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   // Page events
+  /* Check if given answer is correct or not */
   getAnswerStatus(quiz: any) {
     let isRightAnswer = true;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
@@ -49,10 +50,12 @@ export class ReviewComponent implements OnInit, OnDestroy {
       isRightAnswer = quiz['selectedOption']['isAnswer'];
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       const selectedOptions = quiz['selectedOption'];
+      /* Array of all the selected options */
       const optionsArray = quiz['quizObj']['options'];
-      if (selectedOptions['length'] > 0) {
+      /* Origin array of all the options */
 
-        /* For loop to check if all the selected option are true/right or not */
+      if (selectedOptions['length'] > 0) {
+        /* Check if each and every selected options are true/right */
         for (let i = 0; i < selectedOptions['length']; i++) {
           if (selectedOptions[i]['isAnswer'] === false) {
             isRightAnswer = false;
@@ -60,7 +63,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
           }
         }
 
-        /* To check if true/right option are included inside the selectedOption array */
+        /* Check if each and every correct options are included inside the selectedOption array */
         optionsArray.forEach((option) => {
           if (option['isAnswer'] === true) {
             const index = selectedOptions.findIndex((answerOption) => {
@@ -72,16 +75,19 @@ export class ReviewComponent implements OnInit, OnDestroy {
           }
         });
       }
+
     } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
       isRightAnswer = false;
     }
     return isRightAnswer;
   }
 
-  getDescriptiveAnswer(quiz: any) {
+  /* Check if particular question is descriptive type */
+  isDescriptiveType(quiz: any) {
     return (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE);
   }
 
+  /* Check if user has attempted particular question */
   getAttemptStatus(quiz: any) {
     let isAttempted = false;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||

@@ -22,7 +22,7 @@
             <div *ngIf="getAttemptStatus(quiz)"
                  [ngClass]="{'right-answer' : getAnswerStatus(quiz),
                'wrong-answer' : !(getAnswerStatus(quiz)),
-               'text-answer' : getDescriptiveAnswer(quiz)}">
+               'text-answer' : isDescriptiveType(quiz)}">
 
               <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE)">
                 <span>Your Answer:</span>
