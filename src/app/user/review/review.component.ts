@@ -73,6 +73,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
           }
         });
       }
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+      isRightAnswer = false;
     }
     return isRightAnswer;
   }
@@ -84,14 +86,13 @@ export class ReviewComponent implements OnInit, OnDestroy {
   getAttemptStatus(quiz: any) {
     let isAttempted = false;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
       isAttempted = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
         isAttempted = true;
       }
-    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
-      isAttempted = !!(quiz['selectedOption']);
     }
     return isAttempted;
   }

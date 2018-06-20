@@ -347,6 +347,99 @@
       "questionId": 14,
       "questionType": "descriptive",
       "options": []
+    },
+    {
+      "question": "Which of the following are life-cycle hooks in Angular?",
+      "questionId": 15,
+      "questionType": "multiple_answer_selection",
+      "options": [
+        {
+          "option": "ngOnChanges()",
+          "optionId": 15001,
+          "isAnswer": true
+        },
+        {
+          "option": "@Input",
+          "optionId": 15002,
+          "isAnswer": false
+        },
+        {
+          "option": "NgFor",
+          "optionId": 15003,
+          "isAnswer": false
+        },
+        {
+          "option": "ngOnInit()",
+          "optionId": 15004,
+          "isAnswer": true
+        },
+        {
+          "option": "@Output",
+          "optionId": 15005,
+          "isAnswer": false
+        }
+      ]
+    },
+    {
+      "question": "Explain ngFor directive with an example.",
+      "questionId": 16,
+      "questionType": "descriptive",
+      "options": []
+    },
+    {
+      "question": "In Angular, A pipe takes in data as input and transforms it to a desired output.",
+      "questionId": 17,
+      "questionType": "true/false",
+      "options": [
+        {
+          "option": "True",
+          "optionId": 17001,
+          "isAnswer": true
+        },
+        {
+          "option": "False",
+          "optionId": 17002,
+          "isAnswer": false
+        }
+      ]
+    },
+    {
+      "question": "Which of the following use to pass data between parent and child?",
+      "questionId": 18,
+      "questionType": "multiple_answer_selection",
+      "options": [
+        {
+          "option": "NgIf",
+          "optionId": 18001,
+          "isAnswer": false
+        },
+        {
+          "option": "@Input",
+          "optionId": 18002,
+          "isAnswer": true
+        },
+        {
+          "option": "NgFor",
+          "optionId": 18003,
+          "isAnswer": false
+        },
+        {
+          "option": "ngOnInit()",
+          "optionId": 18004,
+          "isAnswer": false
+        },
+        {
+          "option": "@Output",
+          "optionId": 18005,
+          "isAnswer": true
+        }
+      ]
+    },
+    {
+      "question": "Explain ngIf directive with an example.",
+      "questionId": 19,
+      "questionType": "descriptive",
+      "options": []
     }
   ]
 }
