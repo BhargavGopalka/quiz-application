@@ -55,6 +55,17 @@
             </mat-radio-group>
           </div>
 
+          <!-- Date question type -->
+          <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DATE)">
+            <mat-form-field>
+              <input (click)="picker.open()" autocomplete="off" matInput
+                     [matDatepicker]="picker" placeholder="Choose a date"
+                     [formControl]="selectedDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
           <!-- Drop down type questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DROP_DOWN)">
             <mat-form-field class="drop-down">

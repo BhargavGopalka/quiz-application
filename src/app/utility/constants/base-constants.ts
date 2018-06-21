@@ -5,4 +5,6 @@ export enum QuestionType {
   DESCRIPTIVE = 'descriptive',
   DROP_DOWN = 'drop_down',
   LINEAR_SCALE = 'linear_scale',
+  DATE = 'date',
+  IIME = 'time',
 }

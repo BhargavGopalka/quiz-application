@@ -498,6 +498,16 @@
       "questionType": "linear_scale",
       "min_scale": 1,
       "max_scale": 10
+    },
+    {
+      "question": "What is today's date?",
+      "questionId": 24,
+      "questionType": "date"
+    },
+    {
+      "question": "What will be tomorrow's date?",
+      "questionId": 25,
+      "questionType": "date"
     }
   ]
 }

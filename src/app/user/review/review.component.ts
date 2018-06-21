@@ -78,7 +78,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
       }
 
     } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DATE)) {
       isRightAnswer = false;
     }
     return isRightAnswer;
@@ -87,7 +88,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
   /* Check if particular question is descriptive type */
   isDescriptiveType(quiz: any) {
     return ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE));
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DATE));
   }
 
   /* Check if user has attempted particular question */
@@ -97,7 +99,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
       (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) ||
-      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DATE)) {
       isAttempted = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
