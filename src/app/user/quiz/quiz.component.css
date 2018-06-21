@@ -18,6 +18,64 @@
   padding: 7px;
 }
 
+.color-index {
+  float: left;
+  background-color: white;
+  width: 225px;
+  height: 275px;
+  margin: 115px 5px 5px 25px;
+  padding: 10px;
+  cursor: default;
+}
+
+.boxes {
+  margin: 10px 0 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.answered-box {
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5;
+  width: 45px;
+  height: 45px;
+  background-color: #dff0d8;
+  color: #006400;
+  border: 1px solid #3c763d;
+  margin: 25px 5px 5px 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.wrong-answered-box {
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5;
+  width: 45px;
+  height: 45px;
+  background-color: #f2dede;
+  color: #A52A2A;
+  border: 1px solid #a94442;
+  margin: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.review-box {
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5;
+  width: 45px;
+  height: 45px;
+  background-color: #ffffed;
+  color: #FF8C00;
+  border: 1px solid #ffa600;
+  margin: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
 .more-time {
   background-color: #dff0d8;
   color: #3c763d;

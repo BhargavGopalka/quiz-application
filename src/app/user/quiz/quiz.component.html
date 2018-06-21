@@ -1,4 +1,18 @@
 <div class="content">
+  <div class="color-index">
+    <div class="boxes">
+      <div class="answered-box"><span>&#10004;</span></div>
+      <span>Answered Questions</span>
+    </div>
+    <div class="boxes">
+      <div class="wrong-answered-box"><span>&#10067;</span></div>
+      <span>Unanswered Questions</span>
+    </div>
+    <div class="boxes">
+      <div class="review-box"><span>&#9998;</span></div>
+      <span>Marked For Reviewed</span>
+    </div>
+  </div>
   <div class="container">
     <div>
       <countdown class="countDown" [ngClass]="{'more-time' : !isLessTimeLeft, 'less-time' : isLessTimeLeft}"
