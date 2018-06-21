@@ -77,7 +77,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
         });
       }
 
-    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE)) {
       isRightAnswer = false;
     }
     return isRightAnswer;
@@ -85,7 +86,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
 
   /* Check if particular question is descriptive type */
   isDescriptiveType(quiz: any) {
-    return (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE);
+    return ((quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE));
   }
 
   /* Check if user has attempted particular question */
@@ -94,7 +96,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
       (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
+      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) ||
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE)) {
       isAttempted = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {

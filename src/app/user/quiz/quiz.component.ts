@@ -24,8 +24,10 @@ export class QuizComponent implements OnInit {
   singleQuestion = [];
   selectedOption = new FormControl();
   selectedDropDown = new FormControl();
+  selectedScale = new FormControl();
   textAnswer = '';
   answersArray = [];
+  numberArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
   multipleAnswers = [];
@@ -85,6 +87,7 @@ export class QuizComponent implements OnInit {
 
     this.selectedOption = new FormControl();
     this.selectedDropDown = new FormControl();
+    this.selectedScale = new FormControl();
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
       this.onFinishQuiz();
@@ -111,6 +114,18 @@ export class QuizComponent implements OnInit {
         }
       }
 
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {
+        this.numberArray = [];
+        const min = this.singleQuestion[0]['quizObj']['min_scale'];
+        const max = this.singleQuestion[0]['quizObj']['max_scale'];
+        for (let i = min; i <= max; i++) {
+          this.numberArray.push(i);
+        }
+        if (this.previousSelection && this.previousSelection['answer']) {
+          this.selectedScale.setValue(this.previousSelection['answer']);
+        }
+      }
+
     }
   }
 
@@ -132,6 +147,12 @@ export class QuizComponent implements OnInit {
       }
     } else if (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
       selectedAnswer = this.selectedDropDown.value;
+    } else if (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {
+      if (this.selectedScale.value) {
+        selectedAnswer = {
+          answer: this.selectedScale.value
+        };
+      }
     }
 
     const params = {
@@ -202,7 +223,8 @@ export class QuizComponent implements OnInit {
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
       (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
+      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) ||
+      (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE)) {
       isAnswered = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
@@ -219,7 +241,8 @@ export class QuizComponent implements OnInit {
       if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
         (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
         (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
-        (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
+        (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) ||
+        (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE)) {
         isNotAnswered = !(quiz['selectedOption']);
       } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
         if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {

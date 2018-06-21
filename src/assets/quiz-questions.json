@@ -484,6 +484,20 @@
           "isAnswer": true
         }
       ]
+    },
+    {
+      "question": "How much do you rate yourself in Angular?",
+      "questionId": 22,
+      "questionType": "linear_scale",
+      "min_scale": 1,
+      "max_scale": 5
+    },
+    {
+      "question": "How much do you rate yourself in Typescript?",
+      "questionId": 23,
+      "questionType": "linear_scale",
+      "min_scale": 1,
+      "max_scale": 10
     }
   ]
 }

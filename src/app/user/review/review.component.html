@@ -24,7 +24,8 @@
                'wrong-answer' : !(getAnswerStatus(quiz)),
                'text-answer' : isDescriptiveType(quiz)}">
 
-              <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE)">
+              <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE) ||
+              (quiz['quizObj']['questionType'] === questionType.LINEAR_SCALE)">
                 <span>Your Answer:</span>
                 <div>
                   <span>{{quiz['selectedOption']['answer']}}</span>

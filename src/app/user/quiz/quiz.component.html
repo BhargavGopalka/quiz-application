@@ -45,6 +45,16 @@
             </mat-radio-group>
           </div>
 
+          <!-- Linear scale question type -->
+          <div *ngIf="(quiz['quizObj']['questionType'] === questionType.LINEAR_SCALE)">
+            <mat-radio-group class="example-radio-group" [formControl]="selectedScale">
+              <mat-radio-button class="example-radio-button" *ngFor="let number of numberArray"
+                                [value]="number">
+                {{number}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
           <!-- Drop down type questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DROP_DOWN)">
             <mat-form-field class="drop-down">
