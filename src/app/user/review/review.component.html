@@ -33,12 +33,14 @@
 
               <div *ngIf="((quiz['quizObj']['questionType'] === questionType.TRUE_FALSE) ||
               (quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE) ||
-              (quiz['quizObj']['questionType'] === questionType.MULTIPLE_ANSWER_SELECTION))">
+              (quiz['quizObj']['questionType'] === questionType.MULTIPLE_ANSWER_SELECTION) ||
+              (quiz['quizObj']['questionType'] === questionType.DROP_DOWN))">
 
                 <div class="incorrect-answer-section"
                      *ngIf="!(getAnswerStatus(quiz)) &&
-                     ((quiz['quizObj']['questionType'] === questionType.TRUE_FALSE)
-                     || (quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE))">
+                     ((quiz['quizObj']['questionType'] === questionType.TRUE_FALSE) ||
+                      (quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE) ||
+                     (quiz['quizObj']['questionType'] === questionType.DROP_DOWN))">
                   <span>You answered incorrectly, your answer:</span>
                   <div>
                     <span>{{quiz['selectedOption']['option']}}</span>

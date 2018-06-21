@@ -45,9 +45,21 @@
             </mat-radio-group>
           </div>
 
+          <!-- Drop down type questions -->
+          <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DROP_DOWN)">
+            <mat-form-field class="drop-down">
+              <mat-select [formControl]="selectedDropDown">
+                <mat-option *ngFor="let option of quiz['quizObj']['options']"
+                            [value]="option">
+                  {{option.option}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
           <!-- Descriptive questions -->
           <div *ngIf="quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE">
-            <mat-form-field class="mat-form-field">
+            <mat-form-field class="material-text-area">
               <mat-label>Enter your answer here</mat-label>
               <textarea matInput
                         [(ngModel)]="textAnswer"

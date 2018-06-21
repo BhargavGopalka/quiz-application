@@ -46,7 +46,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
   getAnswerStatus(quiz: any) {
     let isRightAnswer = true;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
       isRightAnswer = quiz['selectedOption']['isAnswer'];
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       const selectedOptions = quiz['selectedOption'];
@@ -92,7 +93,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
     let isAttempted = false;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
       (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
       isAttempted = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {

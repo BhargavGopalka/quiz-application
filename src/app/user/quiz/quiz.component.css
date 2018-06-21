@@ -188,7 +188,11 @@
   height: 45px;
 }
 
-.mat-form-field {
+.drop-down {
+  width: 30%;
+}
+
+.material-text-area {
   width: 100%;
 }
 

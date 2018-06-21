@@ -23,6 +23,7 @@ export class QuizComponent implements OnInit {
   quizList: any[];
   singleQuestion = [];
   selectedOption = new FormControl();
+  selectedDropDown = new FormControl();
   textAnswer = '';
   answersArray = [];
   isLessTimeLeft = false;
@@ -83,6 +84,7 @@ export class QuizComponent implements OnInit {
     }
 
     this.selectedOption = new FormControl();
+    this.selectedDropDown = new FormControl();
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
       this.onFinishQuiz();
@@ -101,6 +103,12 @@ export class QuizComponent implements OnInit {
           ? this.previousSelection['answer'] : '';
       } else {
         this.textAnswer = '';
+      }
+
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
+        if (this.previousSelection) {
+          this.selectedDropDown.setValue(this.previousSelection);
+        }
       }
 
     }
@@ -122,6 +130,8 @@ export class QuizComponent implements OnInit {
       } else {
         selectedAnswer = null;
       }
+    } else if (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
+      selectedAnswer = this.selectedDropDown.value;
     }
 
     const params = {
@@ -191,7 +201,8 @@ export class QuizComponent implements OnInit {
     let isAnswered = false;
     if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
       (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
       isAnswered = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
@@ -207,7 +218,8 @@ export class QuizComponent implements OnInit {
     if (quiz['isNotAttempted']) {
       if ((quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE) ||
         (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
-        (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE)) {
+        (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
+        (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN)) {
         isNotAnswered = !(quiz['selectedOption']);
       } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
         if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {

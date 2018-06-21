@@ -440,6 +440,50 @@
       "questionId": 19,
       "questionType": "descriptive",
       "options": []
+    },
+    {
+      "question": "Which of the following filter is used to convert input to all lowercase?",
+      "questionId": 20,
+      "questionType": "drop_down",
+      "options": [
+        {
+          "option": "lowercase",
+          "optionId": 20001,
+          "isAnswer": true
+        },
+        {
+          "option": "lower",
+          "optionId": 20002,
+          "isAnswer": false
+        },
+        {
+          "option": "Both of the above.",
+          "optionId": 20003,
+          "isAnswer": false
+        },
+        {
+          "option": "None of the above.",
+          "optionId": 20004,
+          "isAnswer": false
+        }
+      ]
+    },
+    {
+      "question": "In Angular, *hide use to hide/remove HTML element?",
+      "questionId": 21,
+      "questionType": "drop_down",
+      "options": [
+        {
+          "option": "True",
+          "optionId": 21001,
+          "isAnswer": false
+        },
+        {
+          "option": "False",
+          "optionId": 21002,
+          "isAnswer": true
+        }
+      ]
     }
   ]
 }
