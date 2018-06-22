@@ -518,6 +518,53 @@
       "question": "What will be the time tomorrow ?",
       "questionId": 27,
       "questionType": "time"
+    },
+    {
+      "question": "Please select appropriate answer",
+      "questionId": 28,
+      "questionType": "multi_choice_grid",
+      "questionArray": [
+        {
+          "questionRow": "Question Row 1",
+          "questionRowId" : 282801,
+          "answerOption": [
+            {
+              "option": "True",
+              "optionId": 28001
+            }
+          ]
+        },
+        {
+          "questionRow": "Question Row 2",
+          "questionRowId" : 282802,
+          "answerOption": [
+            {
+              "option": "True",
+              "optionId": 28001
+            }
+          ]
+        },
+        {
+          "questionRow": "Question Row 3",
+          "questionRowId" : 282803,
+          "answerOption": [
+            {
+              "option": "False",
+              "optionId": 28002
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "option": "True",
+          "optionId": 28001
+        },
+        {
+          "option": "False",
+          "optionId": 28002
+        }
+      ]
     }
   ]
 }

@@ -28,6 +28,8 @@ export class QuizComponent implements OnInit {
   selectedScale = new FormControl();
   selectedDate = new FormControl();
   selectedTime = new FormControl();
+  selectedMultiChoiceGridOption = new FormControl();
+  multiChoiceGridAnswers = [];
   textAnswer = '';
   answersArray = [];
   numberArray = [];
@@ -107,6 +109,12 @@ export class QuizComponent implements OnInit {
         this.multipleAnswers = [];
       }
 
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
+        this.multiChoiceGridAnswers = this.previousSelection || [];
+      } else {
+        this.multiChoiceGridAnswers = [];
+      }
+
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
         this.textAnswer = (this.previousSelection && this.previousSelection['answer'])
           ? this.previousSelection['answer'] : '';
@@ -155,6 +163,8 @@ export class QuizComponent implements OnInit {
       selectedAnswer = (this.selectedOption.value || this.previousSelection);
     } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
       selectedAnswer = this.multipleAnswers;
+    } else if (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
+      selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
       if (this.textAnswer) {
         selectedAnswer = {
@@ -223,13 +233,28 @@ export class QuizComponent implements OnInit {
   }
 
   /* In the single option and true/false question type, getting status if particular option is previously selected */
-  checkSelectedOption(option) {
+  checkSelectedOption(option: any) {
     let isSelected = false;
     this.answersArray.filter((answerData) => {
       if (answerData['selectedOption'] && (answerData['selectedOption']['optionId'] === option['optionId'])) {
         isSelected = true;
       }
     });
+    return isSelected;
+  }
+
+  /* In the Multi choice grid question type, getting status if particular option is previously selected */
+  checkMultiChoiceGridSelectedOption(option: any, ques: any) {
+    let isSelected = false;
+    if (this.multiChoiceGridAnswers.length > 0) {
+      this.multiChoiceGridAnswers.filter((answerData) => {
+        if ((answerData['questionRow']['questionRowId'] === ques['questionRowId'])) {
+          if (answerData['selection'] && (answerData['selection']['optionId'] === option['optionId'])) {
+            isSelected = true;
+          }
+        }
+      });
+    }
     return isSelected;
   }
 
@@ -292,6 +317,22 @@ export class QuizComponent implements OnInit {
     amazingTimePicker.afterClose().subscribe(time => {
       this.selectedTime.setValue(time);
     });
+  }
+
+  /* Multi choice grid question event - on change or on selecting any option */
+  onChangeOption(quesRow: any) {
+    const params = {
+      questionRow: quesRow,
+      selection: this.selectedMultiChoiceGridOption.value
+    };
+    const index = this.multiChoiceGridAnswers.findIndex((question) => {
+      return (quesRow['questionRowId'] === question['questionRow']['questionRowId']);
+    });
+    if (index === -1) {
+      this.multiChoiceGridAnswers.push(params);
+    } else {
+      this.multiChoiceGridAnswers[index] = params;
+    }
   }
 
   onNotify() {
