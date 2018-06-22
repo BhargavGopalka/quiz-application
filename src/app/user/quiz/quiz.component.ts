@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs/index';
 import {QuestionType} from '../../utility/constants/base-constants';
+import {AmazingTimePickerService} from 'amazing-time-picker';
 
 @Component({
   selector: 'app-quiz',
@@ -26,6 +27,7 @@ export class QuizComponent implements OnInit {
   selectedDropDown = new FormControl();
   selectedScale = new FormControl();
   selectedDate = new FormControl();
+  selectedTime = new FormControl();
   textAnswer = '';
   answersArray = [];
   numberArray = [];
@@ -36,7 +38,8 @@ export class QuizComponent implements OnInit {
 
   constructor(private _sharedService: SharedService,
               private _router: Router,
-              private _http: HttpClient) {
+              private _http: HttpClient,
+              private atp: AmazingTimePickerService) {
   }
 
   ngOnInit() {
@@ -90,6 +93,7 @@ export class QuizComponent implements OnInit {
     this.selectedDropDown = new FormControl();
     this.selectedScale = new FormControl();
     this.selectedDate = new FormControl();
+    this.selectedTime = new FormControl();
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
       this.onFinishQuiz();
@@ -134,6 +138,12 @@ export class QuizComponent implements OnInit {
         }
       }
 
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.TIME) {
+        if (this.previousSelection && this.previousSelection['answer']) {
+          this.selectedTime.setValue(this.previousSelection['answer']);
+        }
+      }
+
     }
   }
 
@@ -165,6 +175,12 @@ export class QuizComponent implements OnInit {
       if (this.selectedDate.value) {
         selectedAnswer = {
           answer: this.selectedDate.value
+        };
+      }
+    } else if (quiz['quizObj']['questionType'] === QuestionType.TIME) {
+      if (this.selectedTime.value) {
+        selectedAnswer = {
+          answer: this.selectedTime.value
         };
       }
     }
@@ -239,7 +255,8 @@ export class QuizComponent implements OnInit {
       (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) ||
       (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.DATE)) {
+      (quiz['quizObj']['questionType'] === QuestionType.DATE) ||
+      (quiz['quizObj']['questionType'] === QuestionType.TIME)) {
       isAnswered = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
@@ -258,7 +275,8 @@ export class QuizComponent implements OnInit {
         (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) ||
         (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) ||
         (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
-        (quiz['quizObj']['questionType'] === QuestionType.DATE)) {
+        (quiz['quizObj']['questionType'] === QuestionType.DATE) ||
+        (quiz['quizObj']['questionType'] === QuestionType.TIME)) {
         isNotAnswered = !(quiz['selectedOption']);
       } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
         if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {
@@ -267,6 +285,13 @@ export class QuizComponent implements OnInit {
       }
     }
     return isNotAnswered;
+  }
+
+  openTimer() {
+    const amazingTimePicker = this.atp.open();
+    amazingTimePicker.afterClose().subscribe(time => {
+      this.selectedTime.setValue(time);
+    });
   }
 
   onNotify() {

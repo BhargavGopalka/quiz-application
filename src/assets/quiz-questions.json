@@ -508,6 +508,16 @@
       "question": "What will be tomorrow's date?",
       "questionId": 25,
       "questionType": "date"
+    },
+    {
+      "question": "What's the time right now?",
+      "questionId": 26,
+      "questionType": "time"
+    },
+    {
+      "question": "What will be the time tomorrow ?",
+      "questionId": 27,
+      "questionType": "time"
     }
   ]
 }

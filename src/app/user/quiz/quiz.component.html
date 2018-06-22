@@ -88,6 +88,11 @@
             </mat-form-field>
           </div>
 
+          <!-- Time question type -->
+          <div *ngIf="quiz['quizObj']['questionType'] === questionType.TIME">
+              <input atp-time-picker [formControl]="selectedTime" (click)="openTimer()">
+          </div>
+
           <!-- Multiple selection answers -->
           <div *ngIf="quiz['quizObj']['questionType'] === questionType.MULTIPLE_ANSWER_SELECTION">
             <div *ngFor="let option of quiz['quizObj']['options']">

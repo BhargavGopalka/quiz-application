@@ -6,5 +6,5 @@ export enum QuestionType {
   DROP_DOWN = 'drop_down',
   LINEAR_SCALE = 'linear_scale',
   DATE = 'date',
-  IIME = 'time',
+  TIME = 'time',
 }

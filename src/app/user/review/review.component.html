@@ -25,7 +25,8 @@
                'text-answer' : isDescriptiveType(quiz)}">
 
               <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE) ||
-              (quiz['quizObj']['questionType'] === questionType.LINEAR_SCALE)">
+              (quiz['quizObj']['questionType'] === questionType.LINEAR_SCALE) ||
+              (quiz['quizObj']['questionType'] === questionType.TIME)">
                 <span>Your Answer:</span>
                 <div>
                   <span>{{quiz['selectedOption']['answer']}}</span>
