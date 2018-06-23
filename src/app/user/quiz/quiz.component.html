@@ -47,10 +47,10 @@
 
           <!-- Multi choice grid questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTI_CHOICE_GRID)">
-            <div *ngFor="let ques of quiz['quizObj']['questionArray']; let i=index">
+            <div *ngFor="let ques of quiz['quizObj']['questionArray']; trackBy :trackByIdx; let i=index">
               <span>{{ques['questionRow']}}</span>
-              <mat-radio-group [formControl]="selectedMultiChoiceGridOption"
-                               (change)="onChangeOption(ques)">
+              <mat-radio-group [(ngModel)]="ques[i]"
+                               (change)="onChangeOption(ques,i)">
                 <mat-radio-button class="example-radio-button"
                                   *ngFor="let option of quiz['quizObj']['options']"
                                   [value]="option" [checked]="checkMultiChoiceGridSelectedOption(option, ques)">

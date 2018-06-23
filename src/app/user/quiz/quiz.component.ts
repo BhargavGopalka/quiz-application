@@ -4,7 +4,6 @@ import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {RouteConstants} from '../../utility/constants/routes';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs/index';
 import {QuestionType} from '../../utility/constants/base-constants';
 import {AmazingTimePickerService} from 'amazing-time-picker';
@@ -28,7 +27,6 @@ export class QuizComponent implements OnInit {
   selectedScale = new FormControl();
   selectedDate = new FormControl();
   selectedTime = new FormControl();
-  selectedMultiChoiceGridOption = new FormControl();
   multiChoiceGridAnswers = [];
   textAnswer = '';
   answersArray = [];
@@ -52,9 +50,7 @@ export class QuizComponent implements OnInit {
   // Initialization methods
   /* Getting quiz questions json data */
   getJsonData(): Observable<any> {
-    return this._http.get('./assets/quiz-questions.json').pipe(
-      map((res: any) => res)
-    );
+    return this._http.get('./assets/quiz-questions.json');
   }
 
   getQuizList() {
@@ -65,7 +61,7 @@ export class QuizComponent implements OnInit {
 
   handleQuizListResponse(response: any) {
     this.quizList = response['quiz'];
-    this.quizList.map((quizQuestions) => {
+    this.quizList.forEach((quizQuestions) => {
       const params = {
         quizObj: quizQuestions,
         isMarked: false,
@@ -96,6 +92,7 @@ export class QuizComponent implements OnInit {
     this.selectedScale = new FormControl();
     this.selectedDate = new FormControl();
     this.selectedTime = new FormControl();
+    this.multiChoiceGridAnswers = [];
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
       this.onFinishQuiz();
@@ -110,9 +107,18 @@ export class QuizComponent implements OnInit {
       }
 
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
-        this.multiChoiceGridAnswers = this.previousSelection || [];
-      } else {
-        this.multiChoiceGridAnswers = [];
+        if (!(this.previousSelection)) {
+          const questions: any[] = this.singleQuestion[0]['quizObj']['questionArray'];
+          questions.forEach((que) => {
+            const params = {
+              questionRow: que,
+              selection: null
+            };
+            this.multiChoiceGridAnswers.push(params);
+          });
+        } else {
+          this.multiChoiceGridAnswers = this.previousSelection;
+        }
       }
 
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
@@ -320,19 +326,36 @@ export class QuizComponent implements OnInit {
   }
 
   /* Multi choice grid question event - on change or on selecting any option */
-  onChangeOption(quesRow: any) {
+  onChangeOption(quesRow: any, i: number) {
+    const questionObj = this.objectWithoutProperty(quesRow, [i.toString()]);
     const params = {
-      questionRow: quesRow,
-      selection: this.selectedMultiChoiceGridOption.value
+      questionRow: questionObj,
+      selection: quesRow[i]
     };
     const index = this.multiChoiceGridAnswers.findIndex((question) => {
       return (quesRow['questionRowId'] === question['questionRow']['questionRowId']);
     });
-    if (index === -1) {
-      this.multiChoiceGridAnswers.push(params);
-    } else {
-      this.multiChoiceGridAnswers[index] = params;
+    this.multiChoiceGridAnswers[index] = params;
+  }
+
+  objectWithoutProperty(obj: any, keys: any[]) {
+    const target = {};
+    for (const i in obj) {
+      if (keys.indexOf(i) >= 0) {
+        continue;
+      }
+
+      if (!Object.prototype.hasOwnProperty.call(obj, i)) {
+        continue;
+      }
+
+      target[i] = obj[i];
     }
+    return target;
+  }
+
+  trackByIdx(index: number, obj: any): any {
+    return index;
   }
 
   onNotify() {

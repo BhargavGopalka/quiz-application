@@ -33,6 +33,22 @@
                 </div>
               </div>
 
+              <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTI_CHOICE_GRID)">
+                <div class="multi-question-box" *ngFor="let option of quiz['selectedOption']">
+                  <div>
+                    <span>Question: {{option['questionRow']['questionRow']}}</span>
+                  </div>
+                  <div>
+                    <span *ngIf="option['selection']">
+                    Your Answer: {{option['selection']['option']}}
+                    </span>
+                    <span *ngIf="!(option['selection'])">
+                    You have not attempted this question.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DATE)">
                 <span>Your Answer:</span>
                 <div>
