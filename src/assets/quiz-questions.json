@@ -612,6 +612,72 @@
           "optionId": 29002
         }
       ]
+    },
+    {
+      "question": "Please select appropriate answer",
+      "questionId": 30,
+      "questionType": "checkbox_grid",
+      "questionArray": [
+        {
+          "questionRow": "ABC Question Row 1",
+          "questionRowId": 303001
+        },
+        {
+          "questionRow": "ABC Question Row 2",
+          "questionRowId": 303002
+        },
+        {
+          "questionRow": "ABC Question Row 3",
+          "questionRowId": 303003
+        }
+      ],
+      "options": [
+        {
+          "option": "True",
+          "optionId": 30001
+        },
+        {
+          "option": "False",
+          "optionId": 30002
+        }
+      ]
+    },
+    {
+      "question": "Please select appropriate answer",
+      "questionId": 31,
+      "questionType": "checkbox_grid",
+      "questionArray": [
+        {
+          "questionRow": "Question Row 1",
+          "questionRowId": 313101
+        },
+        {
+          "questionRow": "Question Row 2",
+          "questionRowId": 313102
+        },
+        {
+          "questionRow": "Question Row 3",
+          "questionRowId": 313103
+        }
+      ],
+      "options": [
+        {
+          "option": "abc",
+          "optionId": 31001
+        },
+        {
+          "option": "xyz",
+          "optionId": 31002
+        },
+        {
+          "option": "All of above",
+          "optionId": 31003
+        },
+        {
+          "option": "None of above",
+          "optionId": 31004
+        }
+      ]
     }
   ]
 }

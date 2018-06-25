@@ -92,7 +92,8 @@ export class ReviewComponent implements OnInit, OnDestroy {
       (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DATE) ||
       (quiz['quizObj']['questionType'] === QuestionType.TIME) ||
-      (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID));
+      (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) ||
+      (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID));
   }
 
   /* Check if user has attempted particular question */
@@ -105,14 +106,13 @@ export class ReviewComponent implements OnInit, OnDestroy {
       (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) ||
       (quiz['quizObj']['questionType'] === QuestionType.DATE) ||
       (quiz['quizObj']['questionType'] === QuestionType.TIME) ||
-      (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID)) {
+      (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) ||
+      (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID)) {
       isAttempted = !!(quiz['selectedOption']);
     } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION)) {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
         isAttempted = true;
       }
-    } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID)) {
-      isAttempted = true;
     }
     return isAttempted;
   }

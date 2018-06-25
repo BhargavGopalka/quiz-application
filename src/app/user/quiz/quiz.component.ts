@@ -28,6 +28,7 @@ export class QuizComponent implements OnInit {
   selectedDate = new FormControl();
   selectedTime = new FormControl();
   multiChoiceGridAnswers = [];
+  checkboxGridAnswers = [];
   textAnswer = '';
   answersArray = [];
   numberArray = [];
@@ -93,6 +94,7 @@ export class QuizComponent implements OnInit {
     this.selectedDate = new FormControl();
     this.selectedTime = new FormControl();
     this.multiChoiceGridAnswers = [];
+    this.checkboxGridAnswers = [];
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
       this.onFinishQuiz();
@@ -118,6 +120,21 @@ export class QuizComponent implements OnInit {
           });
         } else {
           this.multiChoiceGridAnswers = this.previousSelection;
+        }
+      }
+
+      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
+        if (!(this.previousSelection)) {
+          const questions: any[] = this.singleQuestion[0]['quizObj']['questionArray'];
+          questions.forEach((que) => {
+            const params = {
+              questionRow: que,
+              selection: null
+            };
+            this.checkboxGridAnswers.push(params);
+          });
+        } else {
+          this.checkboxGridAnswers = this.previousSelection;
         }
       }
 
@@ -171,6 +188,8 @@ export class QuizComponent implements OnInit {
       selectedAnswer = this.multipleAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
       selectedAnswer = this.multiChoiceGridAnswers;
+    } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
+      selectedAnswer = this.checkboxGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
       if (this.textAnswer) {
         selectedAnswer = {
@@ -264,6 +283,25 @@ export class QuizComponent implements OnInit {
     return isSelected;
   }
 
+  /* In the checkbox grid question type, getting status if particular option is previously selected */
+  checkCheckBoxGridSelectedOption(option: any, ques: any) {
+    let isSelected = false;
+    this.checkboxGridAnswers.forEach((answerData) => {
+      if ((answerData['questionRow']['questionRowId'] === ques['questionRowId'])) {
+        const selection = answerData['selection'] || [];
+        if (selection['length'] > 0) {
+          const index = selection.findIndex((optionData) => {
+            return (option['optionId'] === optionData['optionId']);
+          });
+          if (index !== -1) {
+            isSelected = true;
+          }
+        }
+      }
+    });
+    return isSelected;
+  }
+
   /* In the multi answer question type, getting status if particular option is previously selected or not */
   getPreviouslySelectedAnswers(option: any, quiz: any) {
     const selectedAnswersArray = quiz['selectedOption'] || [];
@@ -302,6 +340,16 @@ export class QuizComponent implements OnInit {
           }
         });
       }
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID)) {
+      const selectedOptions = quiz['selectedOption'] || [];
+      if (selectedOptions['length'] > 0) {
+        selectedOptions.forEach((answer) => {
+          const selectedAnswersArray = answer['selection'] || [];
+          if (selectedAnswersArray['length'] > 0) {
+            isAnswered = true;
+          }
+        });
+      }
     }
     return isAnswered;
   }
@@ -333,6 +381,18 @@ export class QuizComponent implements OnInit {
           });
         }
         isNotAnswered = !internalIsAnswered;
+      } else if ((quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID)) {
+        const selectedOptions = quiz['selectedOption'] || [];
+        let internalIsAnswered = false;
+        if (selectedOptions['length'] > 0) {
+          selectedOptions.forEach((answer) => {
+            const selectedAnswerArray = answer['selection'] || [];
+            if (selectedAnswerArray['length'] > 0) {
+              internalIsAnswered = true;
+            }
+          });
+        }
+        isNotAnswered = !internalIsAnswered;
       }
     }
     return isNotAnswered;
@@ -356,6 +416,28 @@ export class QuizComponent implements OnInit {
       return (quesRow['questionRowId'] === question['questionRow']['questionRowId']);
     });
     this.multiChoiceGridAnswers[index] = params;
+  }
+
+  /* Checkbox grid question event - on checking any option */
+  onCheckOption(event: any, quesRow: any, option: any) {
+    this.checkboxGridAnswers.filter((answerData) => {
+      if (quesRow['questionRowId'] === answerData['questionRow']['questionRowId']) {
+        const selection = answerData['selection'] || [];
+        if (selection['length'] > 0) {
+          const index = selection.findIndex((selectedAnswer) => {
+            return (selectedAnswer['optionId'] === option['optionId']);
+          });
+          if (event && (index === -1)) {
+            selection.push(option);
+          } else if (!(event) && (index !== -1)) {
+            selection.splice(index, 1);
+          }
+        } else {
+          selection.push(option);
+        }
+        answerData['selection'] = selection;
+      }
+    });
   }
 
   objectWithoutProperty(obj: any, keys: any[]) {
