@@ -293,6 +293,15 @@ export class QuizComponent implements OnInit {
       if (quiz['selectedOption'] && quiz['selectedOption']['length'] > 0) {
         isAnswered = true;
       }
+    } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID)) {
+      const selectedOptions = quiz['selectedOption'];
+      if (selectedOptions && selectedOptions['length'] > 0) {
+        selectedOptions.forEach((answer) => {
+          if (answer['selection']) {
+            isAnswered = true;
+          }
+        });
+      }
     }
     return isAnswered;
   }
@@ -313,6 +322,17 @@ export class QuizComponent implements OnInit {
         if (quiz['selectedOption'] && quiz['selectedOption']['length'] === 0) {
           isNotAnswered = true;
         }
+      } else if ((quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID)) {
+        const selectedOptions = quiz['selectedOption'];
+        let internalIsAnswered = false;
+        if (selectedOptions && selectedOptions['length'] > 0) {
+          selectedOptions.forEach((answer) => {
+            if (answer['selection']) {
+              internalIsAnswered = true;
+            }
+          });
+        }
+        isNotAnswered = !internalIsAnswered;
       }
     }
     return isNotAnswered;
