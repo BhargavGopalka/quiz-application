@@ -37,12 +37,9 @@
           <!-- Multiple choice questions OR True/false questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE)
           || (quiz['quizObj']['questionType'] === questionType.TRUE_FALSE)">
-            <mat-radio-group class="example-radio-group" [formControl]="selectedOption">
-              <mat-radio-button class="example-radio-button" *ngFor="let option of quiz['quizObj']['options']"
-                                [value]="option" [checked]="checkSelectedOption(option)">
-                {{option.option}}
-              </mat-radio-button>
-            </mat-radio-group>
+            <app-multiple-choice [quiz]="quiz"
+                                 (multipleChoiceSelection)="getMultipleChoiceValue($event, quiz)">
+            </app-multiple-choice>
           </div>
 
           <!-- Multi choice grid questions -->

@@ -22,7 +22,6 @@ export class QuizComponent implements OnInit {
   userData: any;
   quizList: any[];
   singleQuestion = [];
-  selectedOption = new FormControl();
   selectedDropDown = new FormControl();
   selectedScale = new FormControl();
   selectedDate = new FormControl();
@@ -88,7 +87,6 @@ export class QuizComponent implements OnInit {
       this.updateAnswerArray(quiz);
     }
 
-    this.selectedOption = new FormControl();
     this.selectedDropDown = new FormControl();
     this.selectedScale = new FormControl();
     this.selectedDate = new FormControl();
@@ -179,11 +177,11 @@ export class QuizComponent implements OnInit {
   }
 
   /* Updating answerArray before getting requested question */
-  updateAnswerArray(quiz: any) {
+  updateAnswerArray(quiz: any, value?: any) {
     let selectedAnswer: any;
     if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
       (quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE)) {
-      selectedAnswer = (this.selectedOption.value || this.previousSelection);
+      selectedAnswer = value;
     } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
       selectedAnswer = this.multipleAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
@@ -300,6 +298,11 @@ export class QuizComponent implements OnInit {
       }
     });
     return isSelected;
+  }
+
+  /* Getting true/false or multiple choice question type's value before redirecting to different question */
+  getMultipleChoiceValue(value: any, quiz: any) {
+    this.updateAnswerArray(quiz, value);
   }
 
   /* In the multi answer question type, getting status if particular option is previously selected or not */
