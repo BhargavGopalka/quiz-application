@@ -130,10 +130,6 @@
   margin: 5px;
 }
 
-.example-selected-value {
-  margin: 15px 0;
-}
-
 .next-button {
   float: right;
 }
@@ -190,12 +186,4 @@
 
 .drop-down {
   width: 30%;
-}
-
-.material-text-area {
-  width: 100%;
-}
-
-.mat-text-area {
-  height: 125px;
 }

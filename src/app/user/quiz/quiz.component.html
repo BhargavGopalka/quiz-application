@@ -42,10 +42,16 @@
             </app-multiple-choice>
           </div>
 
-          <!-- Multiple selection answers -->
+          <!-- Multiple selection/checkbox questions -->
           <div *ngIf="quiz['quizObj']['questionType'] === questionType.MULTIPLE_ANSWER_SELECTION">
             <app-checkbox [quiz]="quiz"
                           (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-checkbox>
+          </div>
+
+          <!-- Descriptive questions -->
+          <div *ngIf="quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE">
+            <app-descriptive [quiz]="quiz"
+                             (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-descriptive>
           </div>
 
           <!-- Multi choice grid questions -->
@@ -107,16 +113,6 @@
                   {{option.option}}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-          </div>
-
-          <!-- Descriptive questions -->
-          <div *ngIf="quiz['quizObj']['questionType'] === questionType.DESCRIPTIVE">
-            <mat-form-field class="material-text-area">
-              <mat-label>Enter your answer here</mat-label>
-              <textarea matInput
-                        [(ngModel)]="textAnswer"
-                        class="mat-text-area"></textarea>
             </mat-form-field>
           </div>
 

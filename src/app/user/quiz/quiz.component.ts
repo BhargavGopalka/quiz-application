@@ -28,12 +28,10 @@ export class QuizComponent implements OnInit {
   selectedTime = new FormControl();
   multiChoiceGridAnswers = [];
   checkboxGridAnswers = [];
-  textAnswer = '';
   answersArray = [];
   numberArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
-  multipleAnswers = [];
   previousSelection = null;
 
   constructor(private _sharedService: SharedService,
@@ -130,13 +128,6 @@ export class QuizComponent implements OnInit {
         }
       }
 
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
-        this.textAnswer = (this.previousSelection && this.previousSelection['answer'])
-          ? this.previousSelection['answer'] : '';
-      } else {
-        this.textAnswer = '';
-      }
-
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
         if (this.previousSelection) {
           this.selectedDropDown.setValue(this.previousSelection);
@@ -177,14 +168,6 @@ export class QuizComponent implements OnInit {
       selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.DESCRIPTIVE) {
-      if (this.textAnswer) {
-        selectedAnswer = {
-          answer: this.textAnswer
-        };
-      } else {
-        selectedAnswer = null;
-      }
     } else if (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
       selectedAnswer = this.selectedDropDown.value;
     } else if (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {

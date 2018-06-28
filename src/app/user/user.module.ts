@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {UtilityModule} from '../utility/utility.module';
 import {MultipleChoiceComponent} from './components/multiple-choice/multiple-choice.component';
 import {CheckboxComponent} from './components/checkbox/checkbox.component';
+import {DescriptiveComponent} from './components/descriptive/descriptive.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import {CheckboxComponent} from './components/checkbox/checkbox.component';
     FormsModule,
     UserRoutingModule
   ],
-  declarations: [HomeComponent, QuizComponent, ReviewComponent, MultipleChoiceComponent, CheckboxComponent]
+  declarations: [HomeComponent, QuizComponent, ReviewComponent, MultipleChoiceComponent, CheckboxComponent, DescriptiveComponent]
 })
 export class UserModule {
 }
