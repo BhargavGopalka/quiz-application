@@ -1,6 +1,6 @@
 <mat-radio-group class="example-radio-group" [formControl]="selection">
   <mat-radio-button class="example-radio-button" *ngFor="let option of quiz['quizObj']['options']"
-                    [value]="option" [checked]="checkSelectedOption(option)">
+                    [value]="option">
     {{option.option}}
   </mat-radio-button>
 </mat-radio-group>
