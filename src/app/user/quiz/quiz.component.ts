@@ -22,7 +22,6 @@ export class QuizComponent implements OnInit {
   userData: any;
   quizList: any[];
   singleQuestion = [];
-  selectedDropDown = new FormControl();
   selectedScale = new FormControl();
   selectedDate = new FormControl();
   selectedTime = new FormControl();
@@ -85,7 +84,6 @@ export class QuizComponent implements OnInit {
       this.updateAnswerArray(quiz);
     }
 
-    this.selectedDropDown = new FormControl();
     this.selectedScale = new FormControl();
     this.selectedDate = new FormControl();
     this.selectedTime = new FormControl();
@@ -128,12 +126,6 @@ export class QuizComponent implements OnInit {
         }
       }
 
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
-        if (this.previousSelection) {
-          this.selectedDropDown.setValue(this.previousSelection);
-        }
-      }
-
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {
         this.numberArray = [];
         const min = this.singleQuestion[0]['quizObj']['min_scale'];
@@ -168,8 +160,6 @@ export class QuizComponent implements OnInit {
       selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.DROP_DOWN) {
-      selectedAnswer = this.selectedDropDown.value;
     } else if (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {
       if (this.selectedScale.value) {
         selectedAnswer = {

@@ -13,6 +13,7 @@ import {UtilityModule} from '../utility/utility.module';
 import {MultipleChoiceComponent} from './components/multiple-choice/multiple-choice.component';
 import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {DescriptiveComponent} from './components/descriptive/descriptive.component';
+import {DropDownComponent} from './components/drop-down/drop-down.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,15 @@ import {DescriptiveComponent} from './components/descriptive/descriptive.compone
     FormsModule,
     UserRoutingModule
   ],
-  declarations: [HomeComponent, QuizComponent, ReviewComponent, MultipleChoiceComponent, CheckboxComponent, DescriptiveComponent]
+  declarations: [
+    HomeComponent,
+    QuizComponent,
+    ReviewComponent,
+    MultipleChoiceComponent,
+    CheckboxComponent,
+    DescriptiveComponent,
+    DropDownComponent
+  ]
 })
 export class UserModule {
 }
