@@ -224,11 +224,15 @@ export class QuizComponent implements OnInit {
       selectedOption: selectedAnswer,
       isNotAttempted: true
     };
+    this.onUpdatingAnswerArray(params);
+  }
+
+  onUpdatingAnswerArray(value: any) {
     const index = this.answersArray.findIndex(answerData => {
-      return (answerData['quizObj']['questionId'] === quiz['quizObj']['questionId']);
+      return (answerData['quizObj']['questionId'] === value['quizObj']['questionId']);
     });
     if (index !== -1) {
-      this.answersArray[index] = params;
+      this.answersArray[index] = value;
     }
   }
 
@@ -253,17 +257,6 @@ export class QuizComponent implements OnInit {
         this.multipleAnswers.splice(index, 1);
       }
     }
-  }
-
-  /* In the single option and true/false question type, getting status if particular option is previously selected */
-  checkSelectedOption(option: any) {
-    let isSelected = false;
-    this.answersArray.filter((answerData) => {
-      if (answerData['selectedOption'] && (answerData['selectedOption']['optionId'] === option['optionId'])) {
-        isSelected = true;
-      }
-    });
-    return isSelected;
   }
 
   /* In the Multi choice grid question type, getting status if particular option is previously selected */
@@ -301,8 +294,8 @@ export class QuizComponent implements OnInit {
   }
 
   /* Getting true/false or multiple choice question type's value before redirecting to different question */
-  getMultipleChoiceValue(value: any, quiz: any) {
-    this.updateAnswerArray(quiz, value);
+  getMultipleChoiceValue(value: any) {
+    this.onUpdatingAnswerArray(value);
   }
 
   /* In the multi answer question type, getting status if particular option is previously selected or not */

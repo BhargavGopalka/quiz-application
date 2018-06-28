@@ -33,6 +33,12 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.multipleChoiceSelection.emit(this.selection.value || this.previousSelection);
+    const params = {
+      quizObj: this.quiz['quizObj'],
+      isMarked: this.quiz['isMarked'],
+      selectedOption: (this.selection.value || this.previousSelection),
+      isNotAttempted: true
+    };
+    this.multipleChoiceSelection.emit(params);
   }
 }
