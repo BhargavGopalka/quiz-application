@@ -10,7 +10,7 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
 
   // Angular variables
   @Input() quiz: any;
-  @Output() multipleChoiceSelection = new EventEmitter<any>();
+  @Output() updatedAnswerObject = new EventEmitter<any>();
 
   // Data related variables
   selection = new FormControl();
@@ -39,6 +39,6 @@ export class MultipleChoiceComponent implements OnInit, OnDestroy {
       selectedOption: (this.selection.value || this.previousSelection),
       isNotAttempted: true
     };
-    this.multipleChoiceSelection.emit(params);
+    this.updatedAnswerObject.emit(params);
   }
 }

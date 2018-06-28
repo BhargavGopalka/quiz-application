@@ -100,12 +100,6 @@ export class QuizComponent implements OnInit {
       this.getParticularQuestion(questionNumber);
       this.previousSelection = this.singleQuestion[0]['selectedOption'];
 
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
-        this.multipleAnswers = this.previousSelection || [];
-      } else {
-        this.multipleAnswers = [];
-      }
-
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
         if (!(this.previousSelection)) {
           const questions: any[] = this.singleQuestion[0]['quizObj']['questionArray'];
@@ -177,14 +171,9 @@ export class QuizComponent implements OnInit {
   }
 
   /* Updating answerArray before getting requested question */
-  updateAnswerArray(quiz: any, value?: any) {
+  updateAnswerArray(quiz: any) {
     let selectedAnswer: any;
-    if ((quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_CHOICE) ||
-      (quiz['quizObj']['questionType'] === QuestionType.TRUE_FALSE)) {
-      selectedAnswer = value;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.MULTIPLE_ANSWER_SELECTION) {
-      selectedAnswer = this.multipleAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
+    if (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
       selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
@@ -245,20 +234,6 @@ export class QuizComponent implements OnInit {
     quiz.isMarked = event.checked;
   }
 
-  /* For multiple answer selection */
-  onChangeMultipleAnswers(event, option) {
-    if (event) {
-      this.multipleAnswers.push(option);
-    } else {
-      const index = this.multipleAnswers.findIndex(answerData => {
-        return (answerData['optionId'] === option['optionId']);
-      });
-      if (index > -1) {
-        this.multipleAnswers.splice(index, 1);
-      }
-    }
-  }
-
   /* In the Multi choice grid question type, getting status if particular option is previously selected */
   checkMultiChoiceGridSelectedOption(option: any, ques: any) {
     let isSelected = false;
@@ -290,25 +265,6 @@ export class QuizComponent implements OnInit {
         }
       }
     });
-    return isSelected;
-  }
-
-  /* Getting true/false or multiple choice question type's value before redirecting to different question */
-  getMultipleChoiceValue(value: any) {
-    this.onUpdatingAnswerArray(value);
-  }
-
-  /* In the multi answer question type, getting status if particular option is previously selected or not */
-  getPreviouslySelectedAnswers(option: any, quiz: any) {
-    const selectedAnswersArray = quiz['selectedOption'] || [];
-    let isSelected = false;
-    if (selectedAnswersArray.length > 0) {
-      selectedAnswersArray.filter((opt) => {
-        if (opt['optionId'] === option['optionId']) {
-          isSelected = true;
-        }
-      });
-    }
     return isSelected;
   }
 

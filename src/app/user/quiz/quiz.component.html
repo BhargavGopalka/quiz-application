@@ -38,18 +38,14 @@
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTIPLE_CHOICE)
           || (quiz['quizObj']['questionType'] === questionType.TRUE_FALSE)">
             <app-multiple-choice [quiz]="quiz"
-                                 (multipleChoiceSelection)="getMultipleChoiceValue($event)">
+                                 (updatedAnswerObject)="onUpdatingAnswerArray($event)">
             </app-multiple-choice>
           </div>
 
           <!-- Multiple selection answers -->
           <div *ngIf="quiz['quizObj']['questionType'] === questionType.MULTIPLE_ANSWER_SELECTION">
-            <div *ngFor="let option of quiz['quizObj']['options']">
-              <mat-checkbox class="example-section" [value]="option"
-                            (change)="onChangeMultipleAnswers($event.checked,option)"
-                            [checked]="getPreviouslySelectedAnswers(option, quiz)">{{option.option}}
-              </mat-checkbox>
-            </div>
+            <app-checkbox [quiz]="quiz"
+                          (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-checkbox>
           </div>
 
           <!-- Multi choice grid questions -->

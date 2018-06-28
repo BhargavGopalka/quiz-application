@@ -10,7 +10,8 @@ import {CountdownModule} from 'ngx-countdown';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {UtilityModule} from '../utility/utility.module';
-import { MultipleChoiceComponent } from './components/multiple-choice/multiple-choice.component';
+import {MultipleChoiceComponent} from './components/multiple-choice/multiple-choice.component';
+import {CheckboxComponent} from './components/checkbox/checkbox.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { MultipleChoiceComponent } from './components/multiple-choice/multiple-c
     FormsModule,
     UserRoutingModule
   ],
-  declarations: [HomeComponent, QuizComponent, ReviewComponent, MultipleChoiceComponent]
+  declarations: [HomeComponent, QuizComponent, ReviewComponent, MultipleChoiceComponent, CheckboxComponent]
 })
 export class UserModule {
 }
