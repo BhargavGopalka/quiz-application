@@ -80,7 +80,7 @@ export class QuizComponent implements OnInit {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
 
     /* To check if quiz isn't empty and is Object */
-    if (!(Object.keys(quiz).length === 0 && quiz.constructor === Object)) {
+    if ((quiz.constructor === Object) && (Object.keys(quiz).length !== 0)) {
       this.updateAnswerArray(quiz);
     }
 
