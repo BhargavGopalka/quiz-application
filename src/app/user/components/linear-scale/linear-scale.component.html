@@ -1,0 +1,6 @@
+<mat-radio-group class="example-radio-group" [formControl]="selectedScale">
+  <mat-radio-button class="example-radio-button" *ngFor="let number of numberArray"
+                    [value]="number">
+    {{number}}
+  </mat-radio-button>
+</mat-radio-group>

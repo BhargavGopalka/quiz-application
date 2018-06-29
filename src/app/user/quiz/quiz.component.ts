@@ -28,7 +28,6 @@ export class QuizComponent implements OnInit {
   multiChoiceGridAnswers = [];
   checkboxGridAnswers = [];
   answersArray = [];
-  numberArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
   previousSelection = null;
@@ -84,7 +83,6 @@ export class QuizComponent implements OnInit {
       this.updateAnswerArray(quiz);
     }
 
-    this.selectedScale = new FormControl();
     this.selectedDate = new FormControl();
     this.selectedTime = new FormControl();
     this.multiChoiceGridAnswers = [];
@@ -126,18 +124,6 @@ export class QuizComponent implements OnInit {
         }
       }
 
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {
-        this.numberArray = [];
-        const min = this.singleQuestion[0]['quizObj']['min_scale'];
-        const max = this.singleQuestion[0]['quizObj']['max_scale'];
-        for (let i = min; i <= max; i++) {
-          this.numberArray.push(i);
-        }
-        if (this.previousSelection && this.previousSelection['answer']) {
-          this.selectedScale.setValue(this.previousSelection['answer']);
-        }
-      }
-
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DATE) {
         if (this.previousSelection && this.previousSelection['answer']) {
           this.selectedDate.setValue(this.previousSelection['answer']);
@@ -160,12 +146,6 @@ export class QuizComponent implements OnInit {
       selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.LINEAR_SCALE) {
-      if (this.selectedScale.value) {
-        selectedAnswer = {
-          answer: this.selectedScale.value
-        };
-      }
     } else if (quiz['quizObj']['questionType'] === QuestionType.DATE) {
       if (this.selectedDate.value) {
         selectedAnswer = {

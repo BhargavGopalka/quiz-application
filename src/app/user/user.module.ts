@@ -14,6 +14,7 @@ import {MultipleChoiceComponent} from './components/multiple-choice/multiple-cho
 import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {DescriptiveComponent} from './components/descriptive/descriptive.component';
 import {DropDownComponent} from './components/drop-down/drop-down.component';
+import { LinearScaleComponent } from './components/linear-scale/linear-scale.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {DropDownComponent} from './components/drop-down/drop-down.component';
     MultipleChoiceComponent,
     CheckboxComponent,
     DescriptiveComponent,
-    DropDownComponent
+    DropDownComponent,
+    LinearScaleComponent
   ]
 })
 export class UserModule {
