@@ -6,8 +6,8 @@ export enum QuestionType {
   DROP_DOWN = 'drop_down',
   LINEAR_SCALE = 'linear_scale',
   DATE = 'date',
+  TIME = 'time',
 
   MULTI_CHOICE_GRID = 'multi_choice_grid',
   CHECKBOX_GRID = 'checkbox_grid',
-  TIME = 'time',
 }

@@ -72,6 +72,12 @@
                       (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-date>
           </div>
 
+          <!-- Time question type -->
+          <div *ngIf="quiz['quizObj']['questionType'] === questionType.TIME">
+            <app-time [quiz]="quiz"
+                      (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-time>
+          </div>
+
           <!-- Multi choice grid questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTI_CHOICE_GRID)">
             <div *ngFor="let ques of quiz['quizObj']['questionArray']; trackBy :trackByIdx; let i=index">
@@ -99,11 +105,6 @@
                 </mat-checkbox>
               </div>
             </div>
-          </div>
-
-          <!-- Time question type -->
-          <div *ngIf="quiz['quizObj']['questionType'] === questionType.TIME">
-            <input atp-time-picker [formControl]="selectedTime" (click)="openTimer()">
           </div>
 
           <div class="previous-button">

@@ -16,6 +16,7 @@ import {DescriptiveComponent} from './components/descriptive/descriptive.compone
 import {DropDownComponent} from './components/drop-down/drop-down.component';
 import { LinearScaleComponent } from './components/linear-scale/linear-scale.component';
 import { DateComponent } from './components/date/date.component';
+import { TimeComponent } from './components/time/time.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { DateComponent } from './components/date/date.component';
     DescriptiveComponent,
     DropDownComponent,
     LinearScaleComponent,
-    DateComponent
+    DateComponent,
+    TimeComponent
   ]
 })
 export class UserModule {

@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {SharedService} from '../../utility/shared-services/shared.service';
-import {FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {RouteConstants} from '../../utility/constants/routes';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/index';
 import {QuestionType} from '../../utility/constants/base-constants';
-import {AmazingTimePickerService} from 'amazing-time-picker';
 
 @Component({
   selector: 'app-quiz',
@@ -22,7 +20,6 @@ export class QuizComponent implements OnInit {
   userData: any;
   quizList: any[];
   singleQuestion = [];
-  selectedTime = new FormControl();
   multiChoiceGridAnswers = [];
   checkboxGridAnswers = [];
   answersArray = [];
@@ -32,8 +29,7 @@ export class QuizComponent implements OnInit {
 
   constructor(private _sharedService: SharedService,
               private _router: Router,
-              private _http: HttpClient,
-              private atp: AmazingTimePickerService) {
+              private _http: HttpClient) {
   }
 
   ngOnInit() {
@@ -81,7 +77,6 @@ export class QuizComponent implements OnInit {
       this.updateAnswerArray(quiz);
     }
 
-    this.selectedTime = new FormControl();
     this.multiChoiceGridAnswers = [];
     this.checkboxGridAnswers = [];
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
@@ -120,13 +115,6 @@ export class QuizComponent implements OnInit {
           this.checkboxGridAnswers = this.previousSelection;
         }
       }
-
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.TIME) {
-        if (this.previousSelection && this.previousSelection['answer']) {
-          this.selectedTime.setValue(this.previousSelection['answer']);
-        }
-      }
-
     }
   }
 
@@ -137,12 +125,6 @@ export class QuizComponent implements OnInit {
       selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.TIME) {
-      if (this.selectedTime.value) {
-        selectedAnswer = {
-          answer: this.selectedTime.value
-        };
-      }
     }
 
     const params = {
@@ -286,13 +268,6 @@ export class QuizComponent implements OnInit {
       }
     }
     return isNotAnswered;
-  }
-
-  openTimer() {
-    const amazingTimePicker = this.atp.open();
-    amazingTimePicker.afterClose().subscribe(time => {
-      this.selectedTime.setValue(time);
-    });
   }
 
   /* Multi choice grid question event - on change or on selecting any option */
