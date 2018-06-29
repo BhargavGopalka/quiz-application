@@ -1,0 +1,11 @@
+<div *ngFor="let ques of quiz['quizObj']['questionArray']; trackBy :trackByIdx; let i=index">
+  <span>{{ques['questionRow']}}</span>
+  <mat-radio-group [(ngModel)]="ques[i]"
+                   (change)="onChangeOption(ques,i)">
+    <mat-radio-button class="example-radio-button"
+                      *ngFor="let option of quiz['quizObj']['options']"
+                      [value]="option" [checked]="checkMultiChoiceGridSelectedOption(option, ques)">
+      {{option.option}}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>

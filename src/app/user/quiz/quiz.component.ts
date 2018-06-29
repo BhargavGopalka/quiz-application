@@ -20,7 +20,6 @@ export class QuizComponent implements OnInit {
   userData: any;
   quizList: any[];
   singleQuestion = [];
-  multiChoiceGridAnswers = [];
   checkboxGridAnswers = [];
   answersArray = [];
   isLessTimeLeft = false;
@@ -77,7 +76,6 @@ export class QuizComponent implements OnInit {
       this.updateAnswerArray(quiz);
     }
 
-    this.multiChoiceGridAnswers = [];
     this.checkboxGridAnswers = [];
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
@@ -85,21 +83,6 @@ export class QuizComponent implements OnInit {
     } else {
       this.getParticularQuestion(questionNumber);
       this.previousSelection = this.singleQuestion[0]['selectedOption'];
-
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
-        if (!(this.previousSelection)) {
-          const questions: any[] = this.singleQuestion[0]['quizObj']['questionArray'];
-          questions.forEach((que) => {
-            const params = {
-              questionRow: que,
-              selection: null
-            };
-            this.multiChoiceGridAnswers.push(params);
-          });
-        } else {
-          this.multiChoiceGridAnswers = this.previousSelection;
-        }
-      }
 
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
         if (!(this.previousSelection)) {
@@ -121,9 +104,7 @@ export class QuizComponent implements OnInit {
   /* Updating answerArray before getting requested question */
   updateAnswerArray(quiz: any) {
     let selectedAnswer: any;
-    if (quiz['quizObj']['questionType'] === QuestionType.MULTI_CHOICE_GRID) {
-      selectedAnswer = this.multiChoiceGridAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
+    if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
     }
 
@@ -152,21 +133,6 @@ export class QuizComponent implements OnInit {
 
   onChangeMarkedForReviewStatus(quiz, event) {
     quiz.isMarked = event.checked;
-  }
-
-  /* In the Multi choice grid question type, getting status if particular option is previously selected */
-  checkMultiChoiceGridSelectedOption(option: any, ques: any) {
-    let isSelected = false;
-    if (this.multiChoiceGridAnswers.length > 0) {
-      this.multiChoiceGridAnswers.filter((answerData) => {
-        if ((answerData['questionRow']['questionRowId'] === ques['questionRowId'])) {
-          if (answerData['selection'] && (answerData['selection']['optionId'] === option['optionId'])) {
-            isSelected = true;
-          }
-        }
-      });
-    }
-    return isSelected;
   }
 
   /* In the checkbox grid question type, getting status if particular option is previously selected */
@@ -270,19 +236,6 @@ export class QuizComponent implements OnInit {
     return isNotAnswered;
   }
 
-  /* Multi choice grid question event - on change or on selecting any option */
-  onChangeOption(quesRow: any, i: number) {
-    const questionObj = this.objectWithoutProperty(quesRow, [i.toString()]);
-    const params = {
-      questionRow: questionObj,
-      selection: quesRow[i]
-    };
-    const index = this.multiChoiceGridAnswers.findIndex((question) => {
-      return (quesRow['questionRowId'] === question['questionRow']['questionRowId']);
-    });
-    this.multiChoiceGridAnswers[index] = params;
-  }
-
   /* Checkbox grid question event - on checking any option */
   onCheckOption(event: any, quesRow: any, option: any) {
     this.checkboxGridAnswers.filter((answerData) => {
@@ -303,22 +256,6 @@ export class QuizComponent implements OnInit {
         answerData['selection'] = selection;
       }
     });
-  }
-
-  objectWithoutProperty(obj: any, keys: any[]) {
-    const target = {};
-    for (const i in obj) {
-      if (keys.indexOf(i) >= 0) {
-        continue;
-      }
-
-      if (!Object.prototype.hasOwnProperty.call(obj, i)) {
-        continue;
-      }
-
-      target[i] = obj[i];
-    }
-    return target;
   }
 
   trackByIdx(index: number, obj: any): any {

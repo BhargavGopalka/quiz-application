@@ -17,6 +17,7 @@ import {DropDownComponent} from './components/drop-down/drop-down.component';
 import { LinearScaleComponent } from './components/linear-scale/linear-scale.component';
 import { DateComponent } from './components/date/date.component';
 import { TimeComponent } from './components/time/time.component';
+import { MultiChoiceGridComponent } from './components/multi-choice-grid/multi-choice-grid.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { TimeComponent } from './components/time/time.component';
     DropDownComponent,
     LinearScaleComponent,
     DateComponent,
-    TimeComponent
+    TimeComponent,
+    MultiChoiceGridComponent
   ]
 })
 export class UserModule {
