@@ -22,8 +22,6 @@ export class QuizComponent implements OnInit {
   userData: any;
   quizList: any[];
   singleQuestion = [];
-  selectedScale = new FormControl();
-  selectedDate = new FormControl();
   selectedTime = new FormControl();
   multiChoiceGridAnswers = [];
   checkboxGridAnswers = [];
@@ -83,7 +81,6 @@ export class QuizComponent implements OnInit {
       this.updateAnswerArray(quiz);
     }
 
-    this.selectedDate = new FormControl();
     this.selectedTime = new FormControl();
     this.multiChoiceGridAnswers = [];
     this.checkboxGridAnswers = [];
@@ -124,12 +121,6 @@ export class QuizComponent implements OnInit {
         }
       }
 
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.DATE) {
-        if (this.previousSelection && this.previousSelection['answer']) {
-          this.selectedDate.setValue(this.previousSelection['answer']);
-        }
-      }
-
       if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.TIME) {
         if (this.previousSelection && this.previousSelection['answer']) {
           this.selectedTime.setValue(this.previousSelection['answer']);
@@ -146,12 +137,6 @@ export class QuizComponent implements OnInit {
       selectedAnswer = this.multiChoiceGridAnswers;
     } else if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
       selectedAnswer = this.checkboxGridAnswers;
-    } else if (quiz['quizObj']['questionType'] === QuestionType.DATE) {
-      if (this.selectedDate.value) {
-        selectedAnswer = {
-          answer: this.selectedDate.value
-        };
-      }
     } else if (quiz['quizObj']['questionType'] === QuestionType.TIME) {
       if (this.selectedTime.value) {
         selectedAnswer = {

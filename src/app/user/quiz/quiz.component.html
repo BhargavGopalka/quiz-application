@@ -66,6 +66,12 @@
                               (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-linear-scale>
           </div>
 
+          <!-- Date question type -->
+          <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DATE)">
+            <app-date [quiz]="quiz"
+                      (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-date>
+          </div>
+
           <!-- Multi choice grid questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.MULTI_CHOICE_GRID)">
             <div *ngFor="let ques of quiz['quizObj']['questionArray']; trackBy :trackByIdx; let i=index">
@@ -93,17 +99,6 @@
                 </mat-checkbox>
               </div>
             </div>
-          </div>
-
-          <!-- Date question type -->
-          <div *ngIf="(quiz['quizObj']['questionType'] === questionType.DATE)">
-            <mat-form-field>
-              <input (click)="picker.open()" autocomplete="off" matInput
-                     [matDatepicker]="picker" placeholder="Choose a date"
-                     [formControl]="selectedDate">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
           </div>
 
           <!-- Time question type -->
