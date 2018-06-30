@@ -8,6 +8,5 @@ export enum QuestionType {
   DATE = 'date',
   TIME = 'time',
   MULTI_CHOICE_GRID = 'multi_choice_grid',
-
   CHECKBOX_GRID = 'checkbox_grid',
 }

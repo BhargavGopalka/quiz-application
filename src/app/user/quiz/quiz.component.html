@@ -86,25 +86,17 @@
 
           <!-- checkbox grid questions -->
           <div *ngIf="(quiz['quizObj']['questionType'] === questionType.CHECKBOX_GRID)">
-            <div *ngFor="let ques of quiz['quizObj']['questionArray']; trackBy :trackByIdx; let i=index">
-              <span>{{ques['questionRow']}}</span>
-              <div *ngFor="let option of quiz['quizObj']['options']">
-                <mat-checkbox class="example-section"
-                              (change)="onCheckOption($event.checked,ques,option)"
-                              [value]="option"
-                              [checked]="checkCheckBoxGridSelectedOption(option, ques)">{{option.option}}
-                </mat-checkbox>
-              </div>
-            </div>
+            <app-checkbox-grid [quiz]="quiz"
+                               (updatedAnswerObject)="onUpdatingAnswerArray($event)"></app-checkbox-grid>
           </div>
 
           <div class="previous-button">
             <button mat-raised-button color="primary" [disabled]="quiz['quizObj']['questionId'] === 0"
-                    (click)="getQuestions(quiz['quizObj']['questionId'] - 1, quiz)">Previous
+                    (click)="getQuestions(quiz['quizObj']['questionId'] - 1)">Previous
             </button>
             <div class="next-button">
               <button mat-raised-button color="{{finishQuizButton}}"
-                      (click)="getQuestions(quiz['quizObj']['questionId'] + 1, quiz)">
+                      (click)="getQuestions(quiz['quizObj']['questionId'] + 1)">
                 {{quizList.length === (quiz['quizObj']['questionId']+1) ? 'Finish' : 'Next'}}
               </button>
             </div>
@@ -119,7 +111,7 @@
         <span class="single-box" *ngFor="let quizId of answersArray"
               [ngClass]="{'review-marked': quizId['isMarked'], 'answered' : getAnswerStatus(quizId),
                'not-answered' :getNotAnswerStatus(quizId)}"
-              (click)="getQuestions(quizId['quizObj']['questionId'], quiz)">
+              (click)="getQuestions(quizId['quizObj']['questionId'])">
           {{quizId['quizObj']['questionId'] + 1}}
         </span>
           </div>

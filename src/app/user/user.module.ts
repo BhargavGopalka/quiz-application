@@ -18,6 +18,7 @@ import { LinearScaleComponent } from './components/linear-scale/linear-scale.com
 import { DateComponent } from './components/date/date.component';
 import { TimeComponent } from './components/time/time.component';
 import { MultiChoiceGridComponent } from './components/multi-choice-grid/multi-choice-grid.component';
+import { CheckboxGridComponent } from './components/checkbox-grid/checkbox-grid.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { MultiChoiceGridComponent } from './components/multi-choice-grid/multi-c
     LinearScaleComponent,
     DateComponent,
     TimeComponent,
-    MultiChoiceGridComponent
+    MultiChoiceGridComponent,
+    CheckboxGridComponent
   ]
 })
 export class UserModule {

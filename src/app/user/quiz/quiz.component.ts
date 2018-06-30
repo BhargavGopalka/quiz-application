@@ -20,11 +20,9 @@ export class QuizComponent implements OnInit {
   userData: any;
   quizList: any[];
   singleQuestion = [];
-  checkboxGridAnswers = [];
   answersArray = [];
   isLessTimeLeft = false;
   finishQuizButton = 'primary';
-  previousSelection = null;
 
   constructor(private _sharedService: SharedService,
               private _router: Router,
@@ -68,53 +66,19 @@ export class QuizComponent implements OnInit {
   }
 
   // Page events
-  getQuestions(questionNumber: number, quiz = {}) {
+  getQuestions(questionNumber: number) {
     this.finishQuizButton = (questionNumber === (this.quizList.length - 1)) ? 'warn' : 'primary';
-
-    /* To check if quiz isn't empty and is Object */
-    if ((quiz.constructor === Object) && (Object.keys(quiz).length !== 0)) {
-      this.updateAnswerArray(quiz);
-    }
-
-    this.checkboxGridAnswers = [];
     /* Getting upcoming question data or if quiz is complete - redirect to review page */
     if (this.quizList.length === questionNumber) {
       this.onFinishQuiz();
     } else {
       this.getParticularQuestion(questionNumber);
-      this.previousSelection = this.singleQuestion[0]['selectedOption'];
-
-      if (this.singleQuestion[0]['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
-        if (!(this.previousSelection)) {
-          const questions: any[] = this.singleQuestion[0]['quizObj']['questionArray'];
-          questions.forEach((que) => {
-            const params = {
-              questionRow: que,
-              selection: null
-            };
-            this.checkboxGridAnswers.push(params);
-          });
-        } else {
-          this.checkboxGridAnswers = this.previousSelection;
-        }
-      }
     }
   }
 
-  /* Updating answerArray before getting requested question */
-  updateAnswerArray(quiz: any) {
-    let selectedAnswer: any;
-    if (quiz['quizObj']['questionType'] === QuestionType.CHECKBOX_GRID) {
-      selectedAnswer = this.checkboxGridAnswers;
-    }
-
-    const params = {
-      quizObj: quiz['quizObj'],
-      isMarked: quiz['isMarked'],
-      selectedOption: selectedAnswer,
-      isNotAttempted: true
-    };
-    this.onUpdatingAnswerArray(params);
+  onFinishQuiz() {
+    this._sharedService.setAnswerArray(this.answersArray);
+    this._router.navigate(['/' + RouteConstants.REVIEW]);
   }
 
   onUpdatingAnswerArray(value: any) {
@@ -126,32 +90,8 @@ export class QuizComponent implements OnInit {
     }
   }
 
-  onFinishQuiz() {
-    this._sharedService.setAnswerArray(this.answersArray);
-    this._router.navigate(['/' + RouteConstants.REVIEW]);
-  }
-
   onChangeMarkedForReviewStatus(quiz, event) {
     quiz.isMarked = event.checked;
-  }
-
-  /* In the checkbox grid question type, getting status if particular option is previously selected */
-  checkCheckBoxGridSelectedOption(option: any, ques: any) {
-    let isSelected = false;
-    this.checkboxGridAnswers.forEach((answerData) => {
-      if ((answerData['questionRow']['questionRowId'] === ques['questionRowId'])) {
-        const selection = answerData['selection'] || [];
-        if (selection['length'] > 0) {
-          const index = selection.findIndex((optionData) => {
-            return (option['optionId'] === optionData['optionId']);
-          });
-          if (index !== -1) {
-            isSelected = true;
-          }
-        }
-      }
-    });
-    return isSelected;
   }
 
   /* Getting status if user has selected any answer for this particular question */
@@ -234,32 +174,6 @@ export class QuizComponent implements OnInit {
       }
     }
     return isNotAnswered;
-  }
-
-  /* Checkbox grid question event - on checking any option */
-  onCheckOption(event: any, quesRow: any, option: any) {
-    this.checkboxGridAnswers.filter((answerData) => {
-      if (quesRow['questionRowId'] === answerData['questionRow']['questionRowId']) {
-        const selection = answerData['selection'] || [];
-        if (selection['length'] > 0) {
-          const index = selection.findIndex((selectedAnswer) => {
-            return (selectedAnswer['optionId'] === option['optionId']);
-          });
-          if (event && (index === -1)) {
-            selection.push(option);
-          } else if (!(event) && (index !== -1)) {
-            selection.splice(index, 1);
-          }
-        } else {
-          selection.push(option);
-        }
-        answerData['selection'] = selection;
-      }
-    });
-  }
-
-  trackByIdx(index: number, obj: any): any {
-    return index;
   }
 
   onNotify() {
