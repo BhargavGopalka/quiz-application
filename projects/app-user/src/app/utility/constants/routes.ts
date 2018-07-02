@@ -9,4 +9,5 @@ export class RouteConstants {
 export class AdminRouteConstants {
   public static ADMIN_LOGIN = 'admin-login';
   public static ADMIN_HOME = 'home';
+  public static ADMIN_CREATE_QUIZ = 'quiz';
 }

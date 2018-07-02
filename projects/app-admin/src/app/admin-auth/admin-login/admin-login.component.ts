@@ -40,7 +40,7 @@ export class AdminLoginComponent implements OnInit {
   // Page events
   onSubmitLogin(form: FormGroup) {
     if (form.valid) {
-      if ((form['value']['username'] === 'admin') && (form['value']['password'] === 'admin')) {
+      if ((form['value']['username'] === 'Admin') && (form['value']['password'] === 'Admin')) {
         this._sharedService.setUserData(form.value);
         this._sharedService.setToken('abcde12345');
         this._sharedService.setLoginRequired(true);

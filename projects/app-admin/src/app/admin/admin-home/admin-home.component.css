@@ -1,0 +1,26 @@
+.main-content {
+  background-color: #eee;
+  padding: 48px 30px 48px 30px;
+}
+
+.container {
+  margin: 0 150px 0 150px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.col-sm-offset-2 {
+  margin-left: 15%;
+}
+
+span {
+  font-size: 70px;
+}
+
+.quiz-button {
+  padding-top: 25px;
+}
+
+button {
+  margin: 5px;
+}

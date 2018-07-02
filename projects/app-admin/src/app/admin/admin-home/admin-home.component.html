@@ -1,3 +1,11 @@
-<p>
-  admin-home works!
-</p>
+<div class="main-content">
+  <div class="container">
+    <div class="col-sm-8 col-sm-offset-2">
+      <span>Welcome, {{userData['username']}}!</span>
+      <div class="quiz-button">
+        <button mat-raised-button color="primary" (click)="onClickQuiz()">Create Quiz</button>
+        <button mat-raised-button color="warn" (click)="onLogout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>

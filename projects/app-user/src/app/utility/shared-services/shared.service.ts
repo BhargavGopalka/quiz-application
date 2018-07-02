@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {APPStorage} from '../constants/storage';
-import {RouteConstants} from '../constants/routes';
+import {AdminRouteConstants, RouteConstants} from '../constants/routes';
 import {BehaviorSubject, Observable} from 'rxjs/index';
 
 @Injectable({
@@ -84,5 +84,11 @@ export class SharedService {
     localStorage.setItem(APPStorage.REGISTERED_USERS, JSON.stringify(registeredUserData));
     this.setLoginRequired(false);
     this._router.navigate(['/' + RouteConstants.LOGIN]);
+  }
+
+  adminLogout() {
+    localStorage.clear();
+    this.setLoginRequired(false);
+    this._router.navigate(['/' + AdminRouteConstants.ADMIN_LOGIN]);
   }
 }
