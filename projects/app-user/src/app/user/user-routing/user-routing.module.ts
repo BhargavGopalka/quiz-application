@@ -4,7 +4,7 @@ import {RouteConstants} from '../../utility/constants/routes';
 import {HomeComponent} from '../home/home.component';
 import {AuthGuard} from '../../_guards/auth.guard';
 import {QuizComponent} from '../quiz/quiz.component';
-import {ReviewComponent} from "../review/review.component";
+import {ReviewComponent} from '../review/review.component';
 
 const routes: Routes = [
   {
