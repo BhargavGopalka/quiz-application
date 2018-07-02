@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 1100",
-    "build": "ng build",
+    "start-user": "ng serve --port 1100",
+    "start-admin": "ng serve app-admin --port 1200",
+    "build-user": "ng build",
+    "build-admin": "ng build app-admin",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

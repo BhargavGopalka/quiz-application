@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import {UserModule} from './user/user.module';
 import {UserAuthModule} from './user-auth/user-auth.module';
-import {AmazingTimePickerModule} from "amazing-time-picker";
+import {AmazingTimePickerModule} from 'amazing-time-picker';
 
 @NgModule({
   declarations: [
