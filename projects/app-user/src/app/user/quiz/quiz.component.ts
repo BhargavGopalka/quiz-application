@@ -18,6 +18,7 @@ export class QuizComponent implements OnInit {
 
   // Data related variable
   userData: any;
+  quizTitle: string;
   quizList: any[];
   singleQuestion = [];
   answersArray = [];
@@ -48,6 +49,7 @@ export class QuizComponent implements OnInit {
 
   handleQuizListResponse(response: any) {
     this.quizList = response['quiz'];
+    this.quizTitle = response['title'];
     this.quizList.forEach((quizQuestions) => {
       const params = {
         quizObj: quizQuestions,

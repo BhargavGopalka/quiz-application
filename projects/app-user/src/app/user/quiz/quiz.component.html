@@ -26,7 +26,7 @@
         <span class="user-heading"> Hi, {{userData.firstName}}!</span>
         <button class="logout-button" mat-raised-button color="warn" (click)="onLogout()">Logout</button>
         <div>
-          <h3 class="quiz-heading">Quiz for Angular</h3>
+          <h3 class="quiz-heading">{{quizTitle}}</h3>
         </div>
         <div *ngFor="let quiz of singleQuestion">
           <div class="question-box">
