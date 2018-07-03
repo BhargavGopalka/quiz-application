@@ -7,23 +7,19 @@
 
 .container {
   margin-right: 10%;
-  margin-left: 30%;
+  margin-left: 10%;
   padding-left: 15px;
   padding-right: 15px;
 }
 
-.title-input {
-  width: 65%;
+.page-title {
+  text-align: center;
 }
 
-.question-area {
-  padding-top: 30px;
-}
-
-.option-input {
-  width: 35%;
-}
-
-.option-button {
+.action-button{
   margin: 5px;
+}
+
+table {
+  width: 100%;
 }

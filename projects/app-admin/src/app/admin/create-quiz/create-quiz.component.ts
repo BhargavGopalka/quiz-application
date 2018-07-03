@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {QuestionType, questionTypeArray} from '../../../../../app-user/src/app/utility/constants/base-constants';
+import {FormArray, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-admin-create-quiz',
@@ -7,9 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateQuizComponent implements OnInit {
 
-  constructor() { }
+  // Form related variables
+  questionForm: FormGroup;
 
-  ngOnInit() {
+  // Data related variables
+  queType = QuestionType;
+  questionTypeList = questionTypeArray;
+  selectedQuestionType = QuestionType.MULTIPLE_CHOICE;
+
+  constructor() {
   }
 
+  ngOnInit() {
+    this.createQuestionForm();
+  }
+
+  createQuestionForm() {
+    this.questionForm = new FormGroup({
+      questions: new FormArray([])
+    });
+    this.addQuestion();
+  }
+
+  addQuestion() {
+  }
 }

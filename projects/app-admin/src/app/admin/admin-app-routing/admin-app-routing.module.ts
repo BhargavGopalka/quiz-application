@@ -4,6 +4,7 @@ import {AdminRouteConstants} from '../../../../../app-user/src/app/utility/const
 import {AdminHomeComponent} from '../admin-home/admin-home.component';
 import {AdminAuthGuard} from '../../_guards/admin-auth.guard';
 import {CreateQuizComponent} from '../create-quiz/create-quiz.component';
+import {QuizListComponent} from '../quiz-list/quiz-list.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: AdminRouteConstants.ADMIN_CREATE_QUIZ,
     component: CreateQuizComponent,
+    canActivate: [AdminAuthGuard]
+  },
+  {
+    path: AdminRouteConstants.ADMIN_QUIZ_LIST,
+    component: QuizListComponent,
     canActivate: [AdminAuthGuard]
   }
 ];

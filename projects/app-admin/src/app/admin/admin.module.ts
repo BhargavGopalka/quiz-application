@@ -4,6 +4,7 @@ import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {AdminAppRoutingModule} from './admin-app-routing/admin-app-routing.module';
 import {AngularMaterialModule} from '../../../../app-user/src/app/angular-material/angular-material.module';
 import { CreateQuizComponent } from './create-quiz/create-quiz.component';
+import { QuizListComponent } from './quiz-list/quiz-list.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { CreateQuizComponent } from './create-quiz/create-quiz.component';
     AngularMaterialModule,
     AdminAppRoutingModule
   ],
-  declarations: [AdminHomeComponent, CreateQuizComponent]
+  declarations: [AdminHomeComponent, CreateQuizComponent, QuizListComponent]
 })
 export class AdminModule {
 }

@@ -60,5 +60,4 @@ export class AdminLoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-
 }

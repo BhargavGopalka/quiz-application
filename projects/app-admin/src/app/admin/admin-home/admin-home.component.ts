@@ -23,7 +23,7 @@ export class AdminHomeComponent implements OnInit {
 
   // Page events
   onClickQuiz() {
-    this._router.navigate(['/' + AdminRouteConstants.ADMIN_CREATE_QUIZ]);
+    this._router.navigate(['/' + AdminRouteConstants.ADMIN_QUIZ_LIST]);
   }
 
   onLogout() {

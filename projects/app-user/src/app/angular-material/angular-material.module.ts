@@ -7,7 +7,7 @@ import {
   MatFormFieldModule,
   MatInputModule, MatNativeDateModule,
   MatRadioModule,
-  MatSelectModule
+  MatSelectModule, MatTableModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -22,6 +22,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatCheckboxModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatTableModule,
     MatNativeDateModule
   ],
   exports: [
@@ -32,7 +33,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatCheckboxModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule
   ],
   declarations: []
 })
