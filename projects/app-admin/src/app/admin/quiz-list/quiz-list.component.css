@@ -16,10 +16,14 @@
   text-align: center;
 }
 
-.action-button{
+.action-button {
   margin: 5px;
 }
 
 table {
   width: 100%;
+}
+
+.add-button {
+  float: right;
 }

@@ -1,35 +1,52 @@
 <div class="content">
   <div class="container">
     <div>
+      <button class="add-button" mat-raised-button color="primary">Add Section</button>
       <mat-form-field class="title-input">
         <input matInput placeholder="Quiz Title">
       </mat-form-field>
     </div>
     <div class="question-area">
-      <form>
-        <div>
-          <mat-form-field class="title-input">
-            <input matInput placeholder="Question Title">
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-select placeholder="Select question type" [(value)]="selectedQuestionType">
-              <mat-option *ngFor="let questionType of questionTypeList" [value]="questionType.value">
-                {{questionType.display}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div>
-          <div *ngIf="selectedQuestionType === queType.MULTIPLE_CHOICE">
-            <mat-form-field class="option-input">
-              <input matInput placeholder="Option">
-            </mat-form-field>
-            <button class="option-button" mat-raised-button color="primary">Add</button>
-            <button mat-raised-button color="accent">Remove</button>
+      <form [formGroup]="questionForm">
+        <fieldset>
+          <div formArrayName="questions"
+               *ngFor="let ques of getQuestionsArray(); let i = index;">
+            <div [formGroupName]="i">
+              <fieldset class="question-fieldset">
+                <div>
+                  <button (click)="addQuestion()" class="add-button" mat-mini-fab color="primary">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                  <button *ngIf="i !== 0" (click)="removeQuestion(i)" class="add-button" mat-mini-fab color="warn">
+                    <i class="fa fa-minus"></i>
+                  </button>
+                  <mat-form-field class="title-input">
+                    <input matInput placeholder="Question Title" formControlName="question">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-select placeholder="Select question type" formControlName="questionType">
+                      <mat-option (onSelectionChange)="onSelectionChange($event['source'], $event['isUserInput'], i)"
+                                  *ngFor="let questionType of questionTypeList" [value]="questionType.value">
+                        {{questionType.display}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <div *ngIf="queType.MULTIPLE_CHOICE">
+                    <mat-form-field class="option-input">
+                      <input matInput placeholder="Option">
+                    </mat-form-field>
+                    <button class="option-button" mat-raised-button color="primary">Add</button>
+                    <button mat-raised-button color="accent">Remove</button>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
           </div>
-        </div>
+        </fieldset>
       </form>
     </div>
   </div>

@@ -3,12 +3,14 @@ import {CommonModule} from '@angular/common';
 import {AdminHomeComponent} from './admin-home/admin-home.component';
 import {AdminAppRoutingModule} from './admin-app-routing/admin-app-routing.module';
 import {AngularMaterialModule} from '../../../../app-user/src/app/angular-material/angular-material.module';
-import { CreateQuizComponent } from './create-quiz/create-quiz.component';
-import { QuizListComponent } from './quiz-list/quiz-list.component';
+import {CreateQuizComponent} from './create-quiz/create-quiz.component';
+import {QuizListComponent} from './quiz-list/quiz-list.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     AdminAppRoutingModule
   ],

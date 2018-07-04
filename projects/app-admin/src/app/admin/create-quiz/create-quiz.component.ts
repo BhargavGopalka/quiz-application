@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QuestionType, questionTypeArray} from '../../../../../app-user/src/app/utility/constants/base-constants';
-import {FormArray, FormGroup} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-create-quiz',
@@ -26,11 +26,38 @@ export class CreateQuizComponent implements OnInit {
 
   createQuestionForm() {
     this.questionForm = new FormGroup({
-      questions: new FormArray([])
+      questions: new FormArray([this.newQuestion()])
     });
-    this.addQuestion();
   }
 
-  addQuestion() {
+  newQuestion(): FormGroup {
+    return new FormGroup({
+      question: new FormControl(),
+      questionType: new FormControl(QuestionType.MULTIPLE_CHOICE)
+    });
+  }
+
+  // Page events
+  addQuestion(): void {
+    const control = <FormArray>this.questionForm.controls['questions'];
+    control.push(this.newQuestion());
+  }
+
+  removeQuestion(index: number) {
+    const control = <FormArray>this.questionForm.controls['questions'];
+    control.removeAt(index);
+  }
+
+  onSelectionChange(event, isSelect, index) {
+    if (isSelect) {
+      const control = <FormArray>this.questionForm.controls['questions'];
+      // console.log(control.value[index]['questionType']);
+      console.log(event.value);
+    }
+  }
+
+  // helper
+  getQuestionsArray() {
+    return (this.questionForm.controls['questions'] as FormArray).controls;
   }
 }

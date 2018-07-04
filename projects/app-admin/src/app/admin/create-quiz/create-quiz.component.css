@@ -27,3 +27,12 @@
 .option-button {
   margin: 5px;
 }
+
+.add-button {
+  float: right;
+  margin: 5px;
+}
+
+.question-fieldset {
+  margin: 10px;
+}

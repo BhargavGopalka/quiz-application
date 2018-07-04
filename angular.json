@@ -142,7 +142,8 @@
               "projects/app-admin/src/assets"
             ],
             "styles": [
-              "projects/app-admin/src/styles.css"
+              "projects/app-admin/src/styles.css",
+              "../ng2-quiz/node_modules/font-awesome/css/font-awesome.min.css"
             ],
             "scripts": []
           },
