@@ -35,7 +35,7 @@
                   </mat-form-field>
                 </div>
                 <div>
-                  <div *ngIf="queType.MULTIPLE_CHOICE">
+                  <div *ngIf="(getQuestionsArray()[i].value['questionType'] === queType.MULTIPLE_CHOICE)">
                     <mat-form-field class="option-input">
                       <input matInput placeholder="Option">
                     </mat-form-field>

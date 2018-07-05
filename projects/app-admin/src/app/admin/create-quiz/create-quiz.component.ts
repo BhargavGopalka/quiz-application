@@ -50,9 +50,13 @@ export class CreateQuizComponent implements OnInit {
 
   onSelectionChange(event, isSelect, index) {
     if (isSelect) {
-      const control = <FormArray>this.questionForm.controls['questions'];
-      // console.log(control.value[index]['questionType']);
-      console.log(event.value);
+      const questionInput = this.getQuestionsArray()[index].value['question'];
+      const params = {
+        question: questionInput,
+        questionType: event.value
+      };
+      this.getQuestionsArray()[index].setValue(params);
+      console.log(this.getQuestionsArray()[index].value);
     }
   }
 
