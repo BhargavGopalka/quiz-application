@@ -6,6 +6,7 @@ import {AngularMaterialModule} from '../../../../app-user/src/app/angular-materi
 import {CreateQuizComponent} from './create-quiz/create-quiz.component';
 import {QuizListComponent} from './quiz-list/quiz-list.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { QuestionMultipleChoiceComponent } from './components/question-multiple-choice/question-multiple-choice.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     AngularMaterialModule,
     AdminAppRoutingModule
   ],
-  declarations: [AdminHomeComponent, CreateQuizComponent, QuizListComponent]
+  declarations: [AdminHomeComponent, CreateQuizComponent, QuizListComponent, QuestionMultipleChoiceComponent]
 })
 export class AdminModule {
 }

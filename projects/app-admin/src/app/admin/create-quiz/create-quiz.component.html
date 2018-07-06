@@ -17,7 +17,8 @@
                   <button (click)="addQuestion()" class="add-button" mat-mini-fab color="primary">
                     <i class="fa fa-plus"></i>
                   </button>
-                  <button *ngIf="i !== 0" (click)="removeQuestion(i)" class="add-button" mat-mini-fab color="warn">
+                  <button *ngIf="getQuestionsArray().length > 1" (click)="removeQuestion(i)" class="add-button"
+                          mat-mini-fab color="warn">
                     <i class="fa fa-minus"></i>
                   </button>
                   <mat-form-field class="title-input">
@@ -35,17 +36,16 @@
                   </mat-form-field>
                 </div>
                 <div>
+
                   <div *ngIf="(getQuestionsArray()[i].value['questionType'] === queType.MULTIPLE_CHOICE)">
-                    <mat-form-field class="option-input">
-                      <input matInput placeholder="Option">
-                    </mat-form-field>
-                    <button class="option-button" mat-raised-button color="primary">Add</button>
-                    <button mat-raised-button color="accent">Remove</button>
+                    <app-admin-question-multiple-choice></app-admin-question-multiple-choice>
                   </div>
+
                 </div>
               </fieldset>
             </div>
           </div>
+          <button class="option-button" mat-raised-button color="primary">Save Quiz</button>
         </fieldset>
       </form>
     </div>

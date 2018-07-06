@@ -15,7 +15,6 @@ export class CreateQuizComponent implements OnInit {
   // Data related variables
   queType = QuestionType;
   questionTypeList = questionTypeArray;
-  selectedQuestionType = QuestionType.MULTIPLE_CHOICE;
 
   constructor() {
   }
@@ -56,7 +55,6 @@ export class CreateQuizComponent implements OnInit {
         questionType: event.value
       };
       this.getQuestionsArray()[index].setValue(params);
-      console.log(this.getQuestionsArray()[index].value);
     }
   }
 
