@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-question-multiple-choice',
@@ -21,14 +21,14 @@ export class QuestionMultipleChoiceComponent implements OnInit {
   // Initialization Methods
   createOptionForm() {
     this.optionForm = new FormGroup({
-      options: new FormArray([this.newOptions()])
+      options: new FormArray([this.newOptions()]),
+      isAnswer: new FormControl('', [<any>Validators.required])
     });
   }
 
   newOptions(): FormGroup {
     return new FormGroup({
-      option: new FormControl(),
-      isAnswer: new FormControl(false)
+      option: new FormControl('', [<any>Validators.required])
     });
   }
 

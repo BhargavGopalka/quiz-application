@@ -5,16 +5,16 @@
       <mat-form-field class="option-input">
         <input matInput placeholder="Option" formControlName="option">
       </mat-form-field>
-      <mat-form-field class="answer-drop-down">
-        <mat-select placeholder="Answer" formControlName="isAnswer">
-          <mat-option [value]="true">True</mat-option>
-          <mat-option [value]="false">False</mat-option>
-        </mat-select>
-      </mat-form-field>
       <button class="option-button" mat-raised-button color="primary" (click)="addOption()">Add</button>
       <button *ngIf="getOptionsArray().length > 1" mat-raised-button color="warn" (click)="removeOption(i)">Remove
       </button>
     </div>
   </div>
-  <button class="option-button" mat-raised-button color="primary">Save Question</button>
+  <mat-form-field class="answer-drop-down">
+    <mat-select placeholder="Answer" formControlName="isAnswer">
+      <mat-option *ngFor="let otn of getOptionsArray();" [value]="otn.value['option']">{{otn.value['option']}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button class="option-button" mat-raised-button color="primary" [disabled]="optionForm.invalid">Save Question</button>
 </form>
